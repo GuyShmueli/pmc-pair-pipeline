@@ -1,0 +1,26 @@
+
+Below are two cases and the reason for citation between the two. Read them carefully, then generate a concise list of question prompts (in numbered format) that compare these cases on clinically meaningful aspects.
+
+---
+Case A:
+{case_a}
+
+Case B:
+{case_b}
+
+Reason for Citation, Possible Similarities and Explanation:
+{citation_reason}
+---
+
+Now, **generate the list of comparative, clinically relevant questions** that a radiologist or physician might ask to determine whether these two cases share a diagnosis or differ in key features. 
+
+Remember:
+- Maintain clinical depth: mention imaging findings, pathophysiology, or hallmark symptoms.
+- Emphasize similarities/differences that impact diagnosis.
+- Keep the questions focused and direct, as if you are performing a differential diagnosis.
+- Avoid vague or generic questions; ensure each question contributes to understanding diagnostic overlap or divergence.
+- Start with broad-level questions (anatomy, broad diagnosis similarity), then proceed to more specific questions about the nature of the condition, causative agents, imaging signs, etc.
+- Adhere to yes/no questions, if possible.
+- Provide a subtitle specifying the level (1/2/3) of each set of questions.
+
+Provide your final list of questions now.

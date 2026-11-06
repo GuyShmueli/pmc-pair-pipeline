@@ -1,0 +1,1471 @@
+{
+ "description": "Files in provenance/. docs/ANNOTATION_PROVENANCE.md explains them.",
+ "templates": [
+  {
+   "file": "provenance/templates/original_run_first_pass/citation_analysis.instructions.txt",
+   "kind": "instructions",
+   "pass": "original_run_first_pass",
+   "stage": "citation_analysis",
+   "sha256": "85acc8973a453e9437e042f9e6ee875ee53bf679ee2d8493dce19a33da4f6b5a",
+   "model": "o3-mini",
+   "reasoning_effort": "medium",
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "batch_requests.jsonl"
+   ],
+   "requests": 31080,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_first_pass/citation_analysis.user_template.txt",
+   "kind": "user_template",
+   "pass": "original_run_first_pass",
+   "stage": "citation_analysis",
+   "sha256": "8bf7ebbbaa051655fdaa32bb53cb952e5712803261eccdb0912269606fbdccd5",
+   "model": "o3-mini",
+   "reasoning_effort": "medium",
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "batch_requests.jsonl"
+   ],
+   "requests": 31080,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_first_pass/question_generation.instructions.txt",
+   "kind": "instructions",
+   "pass": "original_run_first_pass",
+   "stage": "question_generation",
+   "sha256": "90a5bd116b0ff49744dff3fa32e3c624a3ece4ee9c5ee1c774263339a5a72152",
+   "model": "o3-mini",
+   "reasoning_effort": "low",
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "questions_batch_requests_A.jsonl",
+    "questions_batch_requests_B.jsonl"
+   ],
+   "requests": 31002,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_first_pass/question_generation.user_template.part_A.txt",
+   "kind": "user_template",
+   "pass": "original_run_first_pass",
+   "stage": "question_generation",
+   "sha256": "02eec2e3c239b4e2fef03ebe38a0340d934f92df34957f7175293d8d86a08d3c",
+   "model": "o3-mini",
+   "reasoning_effort": "low",
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "questions_batch_requests_A.jsonl"
+   ],
+   "requests": 16000,
+   "wording": "in bullet or numbered format"
+  },
+  {
+   "file": "provenance/templates/original_run_first_pass/question_generation.user_template.part_B.txt",
+   "kind": "user_template",
+   "pass": "original_run_first_pass",
+   "stage": "question_generation",
+   "sha256": "bbfae114fa91aede66e3e65542525b32096fe1796f07e0c927617a56bfbca997",
+   "model": "o3-mini",
+   "reasoning_effort": "low",
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "questions_batch_requests_B.jsonl"
+   ],
+   "requests": 15002,
+   "wording": "in numbered format"
+  },
+  {
+   "file": "provenance/templates/original_run_first_pass/answer_generation.instructions.txt",
+   "kind": "instructions",
+   "pass": "original_run_first_pass",
+   "stage": "answer_generation",
+   "sha256": "088a7fd7eda4bee8d72f5f54fdd36e64350c03ffeaa754d2fa8fd278a76426a5",
+   "model": "gpt-4.1-mini",
+   "reasoning_effort": null,
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "batch_requests_answer_gen_part1.jsonl",
+    "batch_requests_answer_gen_part2.jsonl"
+   ],
+   "requests": 31002,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_first_pass/answer_generation.user_template.txt",
+   "kind": "user_template",
+   "pass": "original_run_first_pass",
+   "stage": "answer_generation",
+   "sha256": "3b9609fab4c6bfa3630e9c8f08c43f254e265051d977c846c1051227b7567429",
+   "model": "gpt-4.1-mini",
+   "reasoning_effort": null,
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "batch_requests_answer_gen_part1.jsonl",
+    "batch_requests_answer_gen_part2.jsonl"
+   ],
+   "requests": 31002,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_first_pass/pair_selection.instructions.txt",
+   "kind": "instructions",
+   "pass": "original_run_first_pass",
+   "stage": "pair_selection",
+   "sha256": "edeaaab8f2dcb6908b5e80bbdf9e4850dca7bffde270caea9c54182207c787e6",
+   "model": "o4-mini",
+   "reasoning_effort": "low",
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "generate_positives.jsonl"
+   ],
+   "requests": 27519,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_first_pass/pair_selection.user_template.txt",
+   "kind": "user_template",
+   "pass": "original_run_first_pass",
+   "stage": "pair_selection",
+   "sha256": "f5ba8c5ed5523fd9e074ed5b5e33ec9e696589a81cf75c41093f06a369e84310",
+   "model": "o4-mini",
+   "reasoning_effort": "low",
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "generate_positives.jsonl"
+   ],
+   "requests": 27519,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_relabeling/pair_selection.instructions.txt",
+   "kind": "instructions",
+   "pass": "original_run_relabeling",
+   "stage": "pair_selection",
+   "sha256": "a480152f71c446f04c17d6b38e06f9a845a8ec5a9850031ba659ee3c0b50eecb",
+   "model": "gpt-5-mini",
+   "reasoning_effort": null,
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "new_positives_req.jsonl"
+   ],
+   "requests": 27519,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_relabeling/pair_selection.user_template.txt",
+   "kind": "user_template",
+   "pass": "original_run_relabeling",
+   "stage": "pair_selection",
+   "sha256": "f5ba8c5ed5523fd9e074ed5b5e33ec9e696589a81cf75c41093f06a369e84310",
+   "model": "gpt-5-mini",
+   "reasoning_effort": null,
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "new_positives_req.jsonl"
+   ],
+   "requests": 27519,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_compound_figures/citation_analysis.instructions.txt",
+   "kind": "instructions",
+   "pass": "original_run_compound_figures",
+   "stage": "citation_analysis",
+   "sha256": "6a3e37482693ef46ee1a91ae0688ae2cef7a3f6daff266d2560e3c47205f78e7",
+   "model": "o4-mini",
+   "reasoning_effort": "medium",
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "compound_citation_req.jsonl"
+   ],
+   "requests": 13445,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_compound_figures/citation_analysis.user_template.txt",
+   "kind": "user_template",
+   "pass": "original_run_compound_figures",
+   "stage": "citation_analysis",
+   "sha256": "8bf7ebbbaa051655fdaa32bb53cb952e5712803261eccdb0912269606fbdccd5",
+   "model": "o4-mini",
+   "reasoning_effort": "medium",
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "compound_citation_req.jsonl"
+   ],
+   "requests": 13445,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_compound_figures/question_generation.instructions.txt",
+   "kind": "instructions",
+   "pass": "original_run_compound_figures",
+   "stage": "question_generation",
+   "sha256": "90a5bd116b0ff49744dff3fa32e3c624a3ece4ee9c5ee1c774263339a5a72152",
+   "model": "o4-mini",
+   "reasoning_effort": "low",
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "compound_questions_req.jsonl"
+   ],
+   "requests": 13445,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_compound_figures/question_generation.user_template.txt",
+   "kind": "user_template",
+   "pass": "original_run_compound_figures",
+   "stage": "question_generation",
+   "sha256": "bbfae114fa91aede66e3e65542525b32096fe1796f07e0c927617a56bfbca997",
+   "model": "o4-mini",
+   "reasoning_effort": "low",
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "compound_questions_req.jsonl"
+   ],
+   "requests": 13445,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_compound_figures/answer_generation.instructions.txt",
+   "kind": "instructions",
+   "pass": "original_run_compound_figures",
+   "stage": "answer_generation",
+   "sha256": "088a7fd7eda4bee8d72f5f54fdd36e64350c03ffeaa754d2fa8fd278a76426a5",
+   "model": "gpt-5-mini",
+   "reasoning_effort": null,
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "compound_answers_req.jsonl"
+   ],
+   "requests": 13445,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_compound_figures/answer_generation.user_template.txt",
+   "kind": "user_template",
+   "pass": "original_run_compound_figures",
+   "stage": "answer_generation",
+   "sha256": "3b9609fab4c6bfa3630e9c8f08c43f254e265051d977c846c1051227b7567429",
+   "model": "gpt-5-mini",
+   "reasoning_effort": null,
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "compound_answers_req.jsonl"
+   ],
+   "requests": 13445,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_compound_figures/pair_selection.instructions.txt",
+   "kind": "instructions",
+   "pass": "original_run_compound_figures",
+   "stage": "pair_selection",
+   "sha256": "a480152f71c446f04c17d6b38e06f9a845a8ec5a9850031ba659ee3c0b50eecb",
+   "model": "gpt-5-mini",
+   "reasoning_effort": null,
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "compound_positives_req.jsonl"
+   ],
+   "requests": 13445,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/original_run_compound_figures/pair_selection.user_template.txt",
+   "kind": "user_template",
+   "pass": "original_run_compound_figures",
+   "stage": "pair_selection",
+   "sha256": "f5ba8c5ed5523fd9e074ed5b5e33ec9e696589a81cf75c41093f06a369e84310",
+   "model": "gpt-5-mini",
+   "reasoning_effort": null,
+   "api_url": "/v1/chat/completions",
+   "request_files": [
+    "compound_positives_req.jsonl"
+   ],
+   "requests": 13445,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/updated_run/citation_analysis.instructions.txt",
+   "kind": "instructions",
+   "pass": "updated_run",
+   "stage": "citation_analysis",
+   "sha256": "369eed9f29cff51993470f3210f1ee7b10d0155f90a8987d65092b520b946908",
+   "model": "gpt-5.4-mini",
+   "reasoning_effort": "medium",
+   "api_url": "/v1/responses",
+   "request_files": [
+    "citation_req.jsonl"
+   ],
+   "requests": 86230,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/updated_run/citation_analysis.user_template.txt",
+   "kind": "user_template",
+   "pass": "updated_run",
+   "stage": "citation_analysis",
+   "sha256": "8bf7ebbbaa051655fdaa32bb53cb952e5712803261eccdb0912269606fbdccd5",
+   "model": "gpt-5.4-mini",
+   "reasoning_effort": "medium",
+   "api_url": "/v1/responses",
+   "request_files": [
+    "citation_req.jsonl"
+   ],
+   "requests": 86230,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/updated_run/question_generation.instructions.txt",
+   "kind": "instructions",
+   "pass": "updated_run",
+   "stage": "question_generation",
+   "sha256": "b732d0e8f8832b7db7c84526cc0b29803f9ef1f2e97ae36299fe1885ebd48b16",
+   "model": "gpt-5.4-nano",
+   "reasoning_effort": "high",
+   "api_url": "/v1/responses",
+   "request_files": [
+    "fir_questions_nano_high.jsonl",
+    "sec_questions_nano_high.jsonl"
+   ],
+   "requests": 86230,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/updated_run/question_generation.user_template.txt",
+   "kind": "user_template",
+   "pass": "updated_run",
+   "stage": "question_generation",
+   "sha256": "34c78a6c0ef06309dd226855531a7ffcbaedfe262435495d23f96dd129485753",
+   "model": "gpt-5.4-nano",
+   "reasoning_effort": "high",
+   "api_url": "/v1/responses",
+   "request_files": [
+    "fir_questions_nano_high.jsonl",
+    "sec_questions_nano_high.jsonl"
+   ],
+   "requests": 86230,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/updated_run/answer_generation.instructions.txt",
+   "kind": "instructions",
+   "pass": "updated_run",
+   "stage": "answer_generation",
+   "sha256": "25a4a108c86e078f684f7ef82d76f894656db97fedc802e38dca3c51c0940d9a",
+   "model": "gpt-5.4-nano",
+   "reasoning_effort": "high",
+   "api_url": "/v1/responses",
+   "request_files": [
+    "fir_answers_nano_high.jsonl",
+    "sec_answers_nano_high.jsonl"
+   ],
+   "requests": 86230,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/updated_run/answer_generation.user_template.txt",
+   "kind": "user_template",
+   "pass": "updated_run",
+   "stage": "answer_generation",
+   "sha256": "3b9609fab4c6bfa3630e9c8f08c43f254e265051d977c846c1051227b7567429",
+   "model": "gpt-5.4-nano",
+   "reasoning_effort": "high",
+   "api_url": "/v1/responses",
+   "request_files": [
+    "fir_answers_nano_high.jsonl",
+    "sec_answers_nano_high.jsonl"
+   ],
+   "requests": 86230,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/updated_run/pair_selection.instructions.txt",
+   "kind": "instructions",
+   "pass": "updated_run",
+   "stage": "pair_selection",
+   "sha256": "627f6d7d448701f6642a56e85e1a09504d255a4b957feaa1add30b930e6f99af",
+   "model": "gpt-5.4-mini",
+   "reasoning_effort": "low",
+   "api_url": "/v1/responses",
+   "request_files": [
+    "fir_pos_pairs_mini_low.jsonl",
+    "sec_pos_pairs_mini_low.jsonl"
+   ],
+   "requests": 86230,
+   "wording": null
+  },
+  {
+   "file": "provenance/templates/updated_run/pair_selection.user_template.txt",
+   "kind": "user_template",
+   "pass": "updated_run",
+   "stage": "pair_selection",
+   "sha256": "f5ba8c5ed5523fd9e074ed5b5e33ec9e696589a81cf75c41093f06a369e84310",
+   "model": "gpt-5.4-mini",
+   "reasoning_effort": "low",
+   "api_url": "/v1/responses",
+   "request_files": [
+    "fir_pos_pairs_mini_low.jsonl",
+    "sec_pos_pairs_mini_low.jsonl"
+   ],
+   "requests": 86230,
+   "wording": null
+  }
+ ],
+ "source_extracts": [
+  {
+   "file": "provenance/source/original_run/initial_project.cells.py",
+   "source_name": "initial project notebook",
+   "source_sha256": "b90883b7521d08bafae76aed1cfc05ec39c929d19013dd2558df5a0996c3eb3c",
+   "kind": "notebook",
+   "cells": [
+    9,
+    10,
+    16,
+    27,
+    50,
+    51
+   ],
+   "groups": [
+    "compound table writer",
+    "first-route list writer"
+   ],
+   "substitutions": {
+    "private_name": 1,
+    "private_path": 3
+   },
+   "sha256": "7c63d1d8954182571db759491ed681353e8e6f8b3c3331555438391fd2d0e881"
+  },
+  {
+   "file": "provenance/source/original_run/answers_generation.cells.py",
+   "source_name": "answers_generation.ipynb",
+   "source_sha256": "1395ae42889c0e4478a051114fc5c706d440c2b38f9d68632441a391881c7ae2",
+   "kind": "notebook",
+   "cells": [
+    5,
+    8,
+    9,
+    14,
+    20,
+    22,
+    23
+   ],
+   "groups": [
+    "answer outputs",
+    "answer requests"
+   ],
+   "substitutions": {
+    "openai_id": 2,
+    "private_name": 3,
+    "private_path": 3
+   },
+   "sha256": "9036679636bd41d5dd2741ac8713228aa650c0fdba3048b24f0712755af343fd"
+  },
+  {
+   "file": "provenance/source/original_run/case_summary_extraction.cells.py",
+   "source_name": "case_summary_extraction.ipynb",
+   "source_sha256": "2839b807fb6aae9b015c304369a6d7573e8d1694ee3efc32d3294be946c6edff",
+   "kind": "notebook",
+   "cells": [
+    3,
+    4,
+    5,
+    9
+   ],
+   "groups": [
+    "case descriptions"
+   ],
+   "substitutions": {
+    "private_path": 2
+   },
+   "sha256": "ffab17f720109bb392f4a222fe66ef00964a3034d9e8bec604c21f9d3ac7dea7"
+  },
+  {
+   "file": "provenance/source/original_run/citation_extraction.cells.py",
+   "source_name": "citation_extraction.ipynb",
+   "source_sha256": "4d77aab3269a68618c70b96f0d685bc46583405703a3caeb107572cd098a363d",
+   "kind": "notebook",
+   "cells": [
+    14,
+    19,
+    46,
+    47,
+    49,
+    57,
+    61,
+    65,
+    66,
+    69,
+    70,
+    81,
+    82,
+    85
+   ],
+   "groups": [
+    "citation request and output",
+    "citation verification",
+    "first-pass citation request (passage key)",
+    "intersection",
+    "xml and pmid inputs"
+   ],
+   "substitutions": {
+    "case_id": 3,
+    "openai_id": 1,
+    "private_name": 7,
+    "private_path": 10
+   },
+   "sha256": "7f2ba8856e06a80a43853a38e956a89392eaf4a9ae29a4a5113d803d2f4f2af9"
+  },
+  {
+   "file": "provenance/source/original_run/filtering_diagrams.cells.py",
+   "source_name": "filtering_diagrams.ipynb",
+   "source_sha256": "d81fd64ff475d56363245cabefe97a49e9c7b740802117028d4e1df4dc9baee0",
+   "kind": "notebook",
+   "cells": [
+    4,
+    5,
+    14,
+    15,
+    19,
+    20,
+    23,
+    38,
+    52
+   ],
+   "groups": [
+    "diagram list write",
+    "image list",
+    "keep list",
+    "threshold function"
+   ],
+   "substitutions": {
+    "private_name": 3,
+    "private_path": 5
+   },
+   "sha256": "0c2f29c1c03854eebc472f6ff2caba1e59e327b853a84b878c343e8084a7fdd3"
+  },
+  {
+   "file": "provenance/source/original_run/generating_pairs.cells.py",
+   "source_name": "generating_pairs.ipynb",
+   "source_sha256": "a22211c9ac98b64f5a5205123eb82c33ccc6700c8f7da96a4089c95ccb1b8e85",
+   "kind": "notebook",
+   "cells": [
+    18,
+    21,
+    27,
+    30,
+    57,
+    62,
+    77,
+    78,
+    81,
+    82,
+    83,
+    87,
+    89,
+    90,
+    159,
+    160,
+    161,
+    163,
+    164
+   ],
+   "groups": [
+    "first-pass caption dicts and requests",
+    "first-pass ids, labeled records, short text",
+    "pair_id cleanup and pos_pairs_clean"
+   ],
+   "substitutions": {
+    "openai_id": 1,
+    "private_name": 4,
+    "private_path": 7
+   },
+   "sha256": "7cd84d030b9904eae47681a8682d2210ef4819c2f663b5f4011cac92075a761a"
+  },
+  {
+   "file": "provenance/source/original_run/positives_experimenting.cells.py",
+   "source_name": "positives_experimenting.ipynb",
+   "source_sha256": "44224a4d8e5a1da7838bddf3296c49db14396704349e8e4577e152230bbead4c",
+   "kind": "notebook",
+   "cells": [
+    10,
+    11,
+    14,
+    15,
+    16,
+    19
+   ],
+   "groups": [
+    "first-pass parse and radiology regex"
+   ],
+   "substitutions": {},
+   "sha256": "b91108448949f60e5fecb858b0589a212ccd2853262ad45b75955b447ba8b310"
+  },
+  {
+   "file": "provenance/source/original_run/questions_generation.cells.py",
+   "source_name": "questions_generation.ipynb",
+   "source_sha256": "b6995f246263831903dac4aed88c697122b7daf727308a3190bbbee7bcff3c39",
+   "kind": "notebook",
+   "cells": [
+    3,
+    7,
+    9,
+    13,
+    18,
+    20,
+    26,
+    30,
+    35,
+    38
+   ],
+   "groups": [
+    "question outputs",
+    "question requests"
+   ],
+   "substitutions": {
+    "openai_id": 2,
+    "private_name": 2,
+    "private_path": 2
+   },
+   "sha256": "1b27bcc051ec43c19ea9ee314a278ecf3a762388258f5cab38726edfcd0cd5b5"
+  },
+  {
+   "file": "provenance/source/original_run/repeat_pipeline_compound.cells.py",
+   "source_name": "repeat_pipeline_compound.ipynb",
+   "source_sha256": "c6a50073b596fbfb3667d7c3b5371aaa2ad7477bea833bcc13203e0a9dace93b",
+   "kind": "notebook",
+   "cells": [
+    19,
+    20,
+    23,
+    25,
+    28,
+    29,
+    31,
+    34,
+    35,
+    39,
+    40,
+    46,
+    47,
+    49,
+    50,
+    52,
+    55,
+    57,
+    59,
+    65,
+    66,
+    69,
+    79,
+    82,
+    86,
+    87,
+    91,
+    92,
+    100,
+    103,
+    108,
+    109,
+    112,
+    113,
+    117,
+    118,
+    131,
+    135,
+    140,
+    142,
+    145,
+    146,
+    147,
+    148,
+    174,
+    176,
+    178,
+    182,
+    191,
+    193,
+    194,
+    202
+   ],
+   "groups": [
+    "compound answers",
+    "compound citation",
+    "compound descriptor source",
+    "compound labeling",
+    "compound pass: parse, salvage, radiology filter, aligned text",
+    "compound questions",
+    "compound selection",
+    "post-processing",
+    "relabel pass recovery and unordered dedup",
+    "relabel requests",
+    "writer of the compound descriptor file"
+   ],
+   "substitutions": {
+    "case_id": 9,
+    "openai_id": 7,
+    "private_path": 21
+   },
+   "sha256": "68caf001110b5da029bfc359bad1a2882868773a3fef68065367150cd13b5b1b"
+  },
+  {
+   "file": "provenance/source/original_run/extract_citations.py",
+   "source_name": "extract_citations.py",
+   "source_sha256": "f40d7749272ecb3d72586883596ddd5dfcee0c8db5fe899c3d5cf30af56c848d",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "first-pass passage gathering and matching (also imported by the legacy mapper)"
+   ],
+   "substitutions": {
+    "private_path": 2
+   },
+   "sha256": "7ee321b869bee85a878690fee3d2ee6a6afb8a9c7a08c777b6d4f5c81c8c0746"
+  },
+  {
+   "file": "provenance/source/original_run/creating_filtered_df.py",
+   "source_name": "creating_filtered_df.py",
+   "source_sha256": "da25e0b1c7964c63eaa84a87b0e8656229f02a740f5c6a22d26fce6dcb7fdf71",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "compound caption regex"
+   ],
+   "substitutions": {
+    "case_id": 2,
+    "private_name": 1,
+    "private_path": 3
+   },
+   "sha256": "b64f6f32fc07a837cd79bcdb4ba46de5ba13adc334aca838b16e1f8f66a0ef77"
+  },
+  {
+   "file": "provenance/source/original_run/creating_txt_jpg_pairs.py",
+   "source_name": "creating_txt_jpg_pairs.py",
+   "source_sha256": "b9e8ee48dd8d33af6ef4efd013854a5fa4a6b8690e6288273dadc97662324d17",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "first-route caption and image lists"
+   ],
+   "substitutions": {
+    "case_id": 2,
+    "private_name": 2,
+    "private_path": 3
+   },
+   "sha256": "7134f7eea49f547aaea288b9c111b596bd91bc37798578814e1c96acaf41f498"
+  },
+  {
+   "file": "provenance/source/original_run/creating_uids_pairs.py",
+   "source_name": "creating_uids_pairs.py",
+   "source_sha256": "71995a54a93e5e8ecc9abf48ad63198ef7b521aae9e1d97351a1bac68e2b7c8c",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "first-route candidate pairs"
+   ],
+   "substitutions": {
+    "case_id": 4,
+    "private_name": 2,
+    "private_path": 2
+   },
+   "sha256": "0ecb12206f1c846c1cbeeeac406a0f580b5737f7e3b6c640a9710c7d535c8b98"
+  },
+  {
+   "file": "provenance/source/original_run/filtering_diagrams.py",
+   "source_name": "filtering_diagrams.py",
+   "source_sha256": "63260dd705aa3ee8e0032406cfe84ba25b7bd019b6b637ffbb6515c7f39a20bc",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "screening thresholds"
+   ],
+   "substitutions": {
+    "private_name": 1,
+    "private_path": 1
+   },
+   "sha256": "04ddb80e33b4084b244faaa65afd4a4d7076cf59936f6d3a2655a545392ad70e"
+  },
+  {
+   "file": "provenance/source/original_run/final_csv.py",
+   "source_name": "final_csv.py",
+   "source_sha256": "63d74d2daf05f72e8abaa91eab0ea3fd9d8eecef863ed1464342f948bf796c81",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "case to figure join"
+   ],
+   "substitutions": {},
+   "sha256": "63d74d2daf05f72e8abaa91eab0ea3fd9d8eecef863ed1464342f948bf796c81"
+  },
+  {
+   "file": "provenance/source/original_run/image_caption_extraction.py",
+   "source_name": "image_caption_extraction.py",
+   "source_sha256": "ec7003de016afbc5e81a173719c927d899cb799859f2a6444977714723bdc69e",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "download and figure extraction"
+   ],
+   "substitutions": {},
+   "sha256": "73c9aec848176817d01aed061104b8295e467be2c6a766b7d5ec305b3cc68cab"
+  },
+  {
+   "file": "provenance/source/original_run/data_processing.py",
+   "source_name": "data_processing.py",
+   "source_sha256": "401b663e4d9ef0359e94acbf9c0fd8df129044cc1cff954db5d3e5adcfe61fa5",
+   "kind": "script",
+   "lines": [
+    "1-89"
+   ],
+   "groups": [
+    "case selection rule"
+   ],
+   "substitutions": {},
+   "sha256": "3546a1425680e10bf16461ca15cef57ecf953e77b2acb31c767a79a66e50f9f7"
+  },
+  {
+   "file": "provenance/source/original_run/files_info_retrieve.py",
+   "source_name": "files_info_retrieve.py",
+   "source_sha256": "d0faf4d045d1a2dfd15ecb7285a62ea116d72368b7310a090474c7de9993a9bb",
+   "kind": "script",
+   "lines": [
+    "1-43"
+   ],
+   "groups": [
+    "article package lookup"
+   ],
+   "substitutions": {},
+   "sha256": "e5e686492983c99d20dbaef1bcb81c858d5bf28025d68495693f4e956a091276"
+  },
+  {
+   "file": "provenance/source/release_assembly/merge_citations.py",
+   "source_name": "merge_citations.py",
+   "source_sha256": "d26134cf966ba42efc4531eb6cdfda19f4fb308dd1b83ba38168c0732e92dd8a",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "three-run citation merge"
+   ],
+   "substitutions": {
+    "private_name": 5
+   },
+   "sha256": "b766e44fb64d4c5b113cdb814bdcb5f3b66a8b5f716bb03de0732e79b4a9c8f3"
+  },
+  {
+   "file": "provenance/source/release_assembly/original_normalizer.py",
+   "source_name": "original_normalizer.py",
+   "source_sha256": "c9d1a3834d31548694a1211a10f3978b621c8d835770d9d6a59c38c9d9391bcd",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "first-pass citation records to the four-field schema"
+   ],
+   "substitutions": {
+    "private_name": 2
+   },
+   "sha256": "8bf4be9121956c8b8de47293dd8ddb3c6d9740d8cb762f06b91c39afb3364553"
+  },
+  {
+   "file": "provenance/source/release_assembly/map_legacy_empty_citations.py",
+   "source_name": "map_legacy_empty_citations.py",
+   "source_sha256": "9b641545107662f1b8da1324584c5e6ba5a57f7d88168506b3b30c35fa2d178a",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "reference mapping for empty legacy passages"
+   ],
+   "substitutions": {
+    "private_name": 5
+   },
+   "sha256": "fa2570c95d30c0f9d0345357129bde7da3b58b2ffcf10faf33f63915ec308a09"
+  },
+  {
+   "file": "provenance/source/release_assembly/recover_legacy_citations.py",
+   "source_name": "recover_legacy_citations.py",
+   "source_sha256": "0572d9e64a7a859d57cebf3d216cbd2c0ca21a37a638eb337e9fce9cf0cd768f",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "recovery of legacy passages"
+   ],
+   "substitutions": {
+    "private_name": 1
+   },
+   "sha256": "4aed437429525706074e8e36af56b6355f8e665d556a757158b91aae25345042"
+  },
+  {
+   "file": "provenance/source/release_assembly/build_pairs_no_pets_categories.py",
+   "source_name": "build_pairs_no_pets_categories.py",
+   "source_sha256": "1f66a12809fa20136ea82a637fd6a3c7d4d71655c37abfdd75edfac411e235be",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "field selection into image_pairs.json",
+    "released pair file"
+   ],
+   "substitutions": {},
+   "sha256": "1f66a12809fa20136ea82a637fd6a3c7d4d71655c37abfdd75edfac411e235be"
+  },
+  {
+   "file": "provenance/source/release_assembly/eligible_citation_subset.py",
+   "source_name": "no saved script; recovered from a session record",
+   "source_sha256": "754522aed594d126b0bffa6b0bcee8002a4672ecc206549ce8104f48996c6949",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "eligibility subset"
+   ],
+   "substitutions": {
+    "private_name": 10,
+    "private_path": 1
+   },
+   "sha256": "076c8f9fc388e440e48acff06dc4f9e10b915446e98c54d546186fe5fca66509"
+  },
+  {
+   "file": "provenance/source/release_assembly/updated_run_citation_reason_label_strip.py",
+   "source_name": "no saved script; recovered from a session record",
+   "source_sha256": "e513fa485b2978b9a0bf809838b394bad99b36c7e0fc0f9600f31f09f72cc475",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "removes the Reason for Citation label from updated-run records"
+   ],
+   "substitutions": {
+    "private_path": 1
+   },
+   "sha256": "f49fc7185b02842fe4fc82ba0680d2274347c62cd3b4c8633daa5fc9d6121135"
+  },
+  {
+   "file": "provenance/source/release_assembly/updated_run_citation_records.py",
+   "source_name": "no saved script; recovered from a session record",
+   "source_sha256": "4c0e62d65180c1cfdad6bdef64f0b1f0a7a672d9c9966d84d19439c6248c9ec9",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "updated-run citation file builder"
+   ],
+   "substitutions": {
+    "private_path": 1
+   },
+   "sha256": "ec9e1ea11ac89b1531f56b2d84fa3e3b2e78e0753d6eeedc7d708b57c125000e"
+  },
+  {
+   "file": "provenance/source/release_assembly/build_pair_derived_image_annotations.py",
+   "source_name": "build_pair_derived_image_annotations.py",
+   "source_sha256": "0ed8cd5f82ede65edbc54d71db43c54074ee7cf12fedd6dfb36538279dfa987e",
+   "kind": "script",
+   "lines": [
+    "139-171",
+    "206-367",
+    "555-573",
+    "1092-1118"
+   ],
+   "groups": [
+    "descriptor resolution",
+    "descriptor text and field cleaning",
+    "exact-text descriptor recovery and selected_source",
+    "long CSV columns",
+    "pair-key and caption helpers",
+    "source files and priority",
+    "source precedence"
+   ],
+   "substitutions": {
+    "private_name": 4
+   },
+   "sha256": "c0e3247f3988b7f670e363f1c5b2a03cdac84aad19bbdbbb362fc396499fb61e"
+  },
+  {
+   "file": "provenance/source/release_assembly/prepare_pairmed_inputs.py",
+   "source_name": "prepare_pairmed_inputs.py",
+   "source_sha256": "68f643598b0fc2a571a6e4ddbd987e09e5b1671919f5cc4216ad48f25931c82d",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "bucket inclusion, merge with the original run, missing images",
+    "cohort merge, bucket selection, file check",
+    "merge and file check"
+   ],
+   "substitutions": {
+    "private_path": 6
+   },
+   "sha256": "8b3ce3c85817537c29ee21975ae58e619d8a209e4d9e92d70661486dbfdb44ad"
+  },
+  {
+   "file": "provenance/source/release_assembly/pets_filtering.cells.py",
+   "source_name": "pets_filtering.ipynb",
+   "source_sha256": "9d7c9ea8f7912d79ed6fd50b9ba9a9a215e0ba52f4fdf5ac97fe34305084e932",
+   "kind": "notebook",
+   "cells": [
+    0,
+    1,
+    2,
+    6,
+    11,
+    12
+   ],
+   "groups": [
+    "animal heuristic",
+    "animal heuristic over updated-run pairs",
+    "animal rule and screen",
+    "apply blacklist",
+    "blacklist application"
+   ],
+   "substitutions": {
+    "case_id": 2,
+    "private_path": 6
+   },
+   "sha256": "446b266e7a2b5559534d79d6e45209ca86a31983c18d6ea74bbe331ce980f2da"
+  },
+  {
+   "file": "provenance/source/release_assembly/citation_recovery.py",
+   "source_name": "citation_recovery.py",
+   "source_sha256": "4f37529ceb6094e5af8ba10e5070923863f909ca297d99ac3cd08dc5d3dba02a",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "recovery algorithm v1.0.0"
+   ],
+   "substitutions": {},
+   "sha256": "4f37529ceb6094e5af8ba10e5070923863f909ca297d99ac3cd08dc5d3dba02a"
+  },
+  {
+   "file": "provenance/source/release_assembly/recover_case_pair_citations.py",
+   "source_name": "recover_case_pair_citations.py",
+   "source_sha256": "b2ff3da36df608d4c065bdcc0bcbc6af075a6eb6889de20a28957f03ae4cfb45",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "recovery entry point, updated run"
+   ],
+   "substitutions": {},
+   "sha256": "b2ff3da36df608d4c065bdcc0bcbc6af075a6eb6889de20a28957f03ae4cfb45"
+  },
+  {
+   "file": "provenance/source/updated_run/new_pmc_patients_experimenting.cells.py",
+   "source_name": "new_pmc_patients_experimenting.ipynb",
+   "source_sha256": "12aa6b24ec2805c564e5cdd407a82e6b75dfe804fb3e6fbfdff592038a8ab1c5",
+   "kind": "notebook",
+   "cells": [
+    1,
+    4,
+    5,
+    8
+   ],
+   "groups": [
+    "delta against the older collection"
+   ],
+   "substitutions": {
+    "private_path": 2
+   },
+   "sha256": "381f04262fb005e711f132df93cb60f4769b08c8e2e5c14843c8616731a00026"
+  },
+  {
+   "file": "provenance/source/updated_run/repeat_pipeline_compound.cells.py",
+   "source_name": "repeat_pipeline_compound.ipynb",
+   "source_sha256": "c6a50073b596fbfb3667d7c3b5371aaa2ad7477bea833bcc13203e0a9dace93b",
+   "kind": "notebook",
+   "cells": [
+    3
+   ],
+   "groups": [
+    "write result_df.csv"
+   ],
+   "substitutions": {
+    "private_path": 1
+   },
+   "sha256": "191d44bf293ebb1f86c91ea3dd20076f5fbd42eae228658324282e22d81638f2"
+  },
+  {
+   "file": "provenance/source/updated_run/data_processing.py",
+   "source_name": "data_processing.py",
+   "source_sha256": "401b663e4d9ef0359e94acbf9c0fd8df129044cc1cff954db5d3e5adcfe61fa5",
+   "kind": "script",
+   "lines": [
+    "91-178"
+   ],
+   "groups": [
+    "single-case filter, first run"
+   ],
+   "substitutions": {
+    "private_path": 1
+   },
+   "sha256": "cca281f2bc4abea85b548b6de9a1744f0c5f85d61e4cf8e9680f6417fe7ea22b"
+  },
+  {
+   "file": "provenance/source/updated_run/files_info_retrieve.py",
+   "source_name": "files_info_retrieve.py",
+   "source_sha256": "d0faf4d045d1a2dfd15ecb7285a62ea116d72368b7310a090474c7de9993a9bb",
+   "kind": "script",
+   "lines": [
+    "46-88"
+   ],
+   "groups": [
+    "OA package paths used for download"
+   ],
+   "substitutions": {},
+   "sha256": "38d5839aa15288aab051e0ad278f735c9e867872bb985e551b8d48f1055b244a"
+  },
+  {
+   "file": "provenance/source/updated_run/new_data_processing.py",
+   "source_name": "new_data_processing.py",
+   "source_sha256": "c2e3b840a26ee9c1e458cfbbda96352891b03f723d65850f1090156b7fb4fb27",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "single-case filter, second run"
+   ],
+   "substitutions": {
+    "private_path": 1
+   },
+   "sha256": "6707c032235db13f4d3e397603c69a98b2cff2843cbde854c1088f348ecf41f0"
+  },
+  {
+   "file": "provenance/source/updated_run/new_final_csv.py",
+   "source_name": "new_final_csv.py",
+   "source_sha256": "e63bcde70d4b59374ead425585713e70a33d6573c508e47f98a66018639a9201",
+   "kind": "script",
+   "lines": [
+    "3-17"
+   ],
+   "groups": [
+    "figure table join, as run"
+   ],
+   "substitutions": {},
+   "sha256": "12fc5acd5838039d03757503956b53b316168fc330c2a5ecc830fbe9a0d7c10d"
+  },
+  {
+   "file": "provenance/source/updated_run/new_image_caption_extraction.py",
+   "source_name": "new_image_caption_extraction.py",
+   "source_sha256": "47f50b06b53a2f591a7caa6bf52d8d44797f935f777f33a8b379fcc1ee935c23",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "figure and caption extraction"
+   ],
+   "substitutions": {},
+   "sha256": "bef8fca978edf642fcbf0d95040f5c3dbd08b5ac908963a51ca62762f94a3c3a"
+  },
+  {
+   "file": "provenance/source/updated_run/00_filter_diagrams_2.py",
+   "source_name": "00_filter_diagrams_2.py",
+   "source_sha256": "5a9bf820a0074446594378ed4a6540ab6e89d86e24e088d9b13d2036755cb40d",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "figure screening"
+   ],
+   "substitutions": {
+    "private_path": 1
+   },
+   "sha256": "12430f97f93ded8f985cd8acb347b47b6ed246f5630307adc7351d85b576b864"
+  },
+  {
+   "file": "provenance/source/updated_run/00_filter_diagrams_2.sh",
+   "source_name": "00_filter_diagrams_2.sh",
+   "source_sha256": "6a22e97e8770711c81755344c4a3020ae12074ab7b9fb8be77947af723bcbf51",
+   "kind": "script",
+   "lines": [
+    "27-31"
+   ],
+   "groups": [
+    "screening command"
+   ],
+   "substitutions": {},
+   "sha256": "570d0cf9e5a5dd0b2eb112eaba77509cef8cc2d97bd1104d72b6e5a53b4a9250"
+  },
+  {
+   "file": "provenance/source/updated_run/01_prepare_candidates.py",
+   "source_name": "01_prepare_candidates.py",
+   "source_sha256": "7dd64860b9a4615d4b2523d174401ce80062e21bb6bfa6df4eeb9b2c32e803ff",
+   "kind": "script",
+   "lines": [
+    "85-202"
+   ],
+   "groups": [
+    "candidate pairs driver"
+   ],
+   "substitutions": {},
+   "sha256": "eb807d7d57c4268e339aedd621824cda3d6ff86fc7ef02e81ea6e5849821e7d5"
+  },
+  {
+   "file": "provenance/source/updated_run/01_prepare_candidates.sh",
+   "source_name": "01_prepare_candidates.sh",
+   "source_sha256": "d696ebb16701758510d873b4894dc01fe514f366143b74f5bb84c7bf158f9379",
+   "kind": "script",
+   "lines": [
+    "25-30"
+   ],
+   "groups": [
+    "stage 01 command"
+   ],
+   "substitutions": {},
+   "sha256": "262ec0ab95d248268713cbd1bb9909dc6671b23ef2797e4a373d886ec36d7c56"
+  },
+  {
+   "file": "provenance/source/updated_run/02_extract_case_summaries.py",
+   "source_name": "02_extract_case_summaries.py",
+   "source_sha256": "c8ef080f6c13a3312b33ba0071d44df9c1aaff93133dac3c06d672b37a49aa41",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "description driver"
+   ],
+   "substitutions": {},
+   "sha256": "c8ef080f6c13a3312b33ba0071d44df9c1aaff93133dac3c06d672b37a49aa41"
+  },
+  {
+   "file": "provenance/source/updated_run/02_extract_case_summaries.sh",
+   "source_name": "02_extract_case_summaries.sh",
+   "source_sha256": "235c5510a15786e7b4e2ded22722bee728a043583456f7820cc03287316d7c3a",
+   "kind": "script",
+   "lines": [
+    "25-26"
+   ],
+   "groups": [
+    "stage 02 command"
+   ],
+   "substitutions": {},
+   "sha256": "53940ee8e84bdc66f3c6445189460fce866af611df3418ad8ab0bfacd17ae16b"
+  },
+  {
+   "file": "provenance/source/updated_run/03_extract_citations.py",
+   "source_name": "03_extract_citations.py",
+   "source_sha256": "5047dfb5a48b2caf636335f7ea634c7e125f856ab7a301bb6dd1104458855d62",
+   "kind": "script",
+   "lines": [
+    "102-209"
+   ],
+   "groups": [
+    "citation driver"
+   ],
+   "substitutions": {},
+   "sha256": "23e89c41bbe8554edce03fb3419e64a9fa2782e4d17a29176126bacc6d1c0098"
+  },
+  {
+   "file": "provenance/source/updated_run/03_extract_citations.sh",
+   "source_name": "03_extract_citations.sh",
+   "source_sha256": "ae79cf88cd76157d5c6abc1c66093f27d1a75b37ac41989e5401f30a6c08f713",
+   "kind": "script",
+   "lines": [
+    "25-28"
+   ],
+   "groups": [
+    "stage 03 command"
+   ],
+   "substitutions": {},
+   "sha256": "48fb99551f9c3ef0158404487d2f9a7ca971519e63df2d5cdaeae98cc24d6d8a"
+  },
+  {
+   "file": "provenance/source/updated_run/artifacts.py",
+   "source_name": "artifacts.py",
+   "source_sha256": "9d07bf9ff185f80cbf41e635245354d74410c350a4be57fbd024c7bd64de6dfd",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "artifact names"
+   ],
+   "substitutions": {},
+   "sha256": "9d07bf9ff185f80cbf41e635245354d74410c350a4be57fbd024c7bd64de6dfd"
+  },
+  {
+   "file": "provenance/source/updated_run/case_summaries.py",
+   "source_name": "case_summaries.py",
+   "source_sha256": "e0ccbe0e375df1ae018fccacb3f61d9be8003c6256050016cc07e430324e3cec",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "case descriptions"
+   ],
+   "substitutions": {},
+   "sha256": "e0ccbe0e375df1ae018fccacb3f61d9be8003c6256050016cc07e430324e3cec"
+  },
+  {
+   "file": "provenance/source/updated_run/citations.py",
+   "source_name": "citations.py",
+   "source_sha256": "32a73f5fd86141c7c87bc12d2483290f69acf22f43b23f5e943b2cddf518c8ea",
+   "kind": "script",
+   "lines": [
+    "355-900"
+   ],
+   "groups": [
+    "citation verification and passages",
+    "updated-run citation records",
+    "updated-run passage gathering"
+   ],
+   "substitutions": {},
+   "sha256": "da4f324c40c43cb47fceb8db6873726380d4d595ed84c999a1159de5994cd32e"
+  },
+  {
+   "file": "provenance/source/updated_run/data_prep.py",
+   "source_name": "data_prep.py",
+   "source_sha256": "c4ad7517f35533b9ad538af2db608825fbcfcab9992847fca76c5af20a7b459d",
+   "kind": "script",
+   "lines": [
+    "259-642"
+   ],
+   "groups": [
+    "candidate pairs and caption dictionaries"
+   ],
+   "substitutions": {},
+   "sha256": "0e5a324c337c3f4b221d6d76308fa74ecfdaa8869e19f587bcc0d885f2eb919b"
+  },
+  {
+   "file": "provenance/source/updated_run/io_utils.py",
+   "source_name": "io_utils.py",
+   "source_sha256": "530a88f20dc0ee5cafc160688994fc2e6f735789a9f4a308d9c829c1cfb4dc4c",
+   "kind": "script",
+   "lines": "all",
+   "groups": [
+    "JSON helpers"
+   ],
+   "substitutions": {},
+   "sha256": "530a88f20dc0ee5cafc160688994fc2e6f735789a9f4a308d9c829c1cfb4dc4c"
+  },
+  {
+   "file": "provenance/source/updated_run/answers.cells.py",
+   "source_name": "answers.ipynb",
+   "source_sha256": "7083b4df14976ca5037cc21998800d9739216e3b4a4a4bb680f4742a490fb0bc",
+   "kind": "notebook",
+   "cells": [
+    9,
+    10,
+    21,
+    24,
+    25,
+    44,
+    45
+   ],
+   "groups": [
+    "answer alignment",
+    "answer requests",
+    "single retry and merge"
+   ],
+   "substitutions": {
+    "openai_id": 3,
+    "private_path": 1
+   },
+   "sha256": "7c395955e12e40cd264aa7f14e0c0fff9ad4d66ab40c4736e0795d9539267e44"
+  },
+  {
+   "file": "provenance/source/updated_run/citation_reason.cells.py",
+   "source_name": "citation_reason.ipynb",
+   "source_sha256": "ab24ae560e7e0a03b3f991ea7234ed614315086367ad3df0e4fb963662244c1c",
+   "kind": "notebook",
+   "cells": [
+    1,
+    3,
+    12
+   ],
+   "groups": [
+    "citation requests",
+    "text from raw batch output",
+    "updated-run citation request (passage key)"
+   ],
+   "substitutions": {
+    "private_path": 1
+   },
+   "sha256": "d6c1953b8b5064541bdbfd507ade57d8a78ba21f111562e986e5cf34446bba81"
+  },
+  {
+   "file": "provenance/source/updated_run/pipeline_experimenting.cells.py",
+   "source_name": "pipeline_experimenting.ipynb",
+   "source_sha256": "0117a55baa0de689eb8d289f3b45f12753c621eecf40dfa5a34e882e63327f47",
+   "kind": "notebook",
+   "cells": [
+    44,
+    46,
+    47,
+    49,
+    52,
+    53,
+    56,
+    57,
+    59,
+    60
+   ],
+   "groups": [
+    "GIF to JPEG path repair"
+   ],
+   "substitutions": {
+    "private_path": 1
+   },
+   "sha256": "cc91724ca88c88b2e9058401a539f4e6d3664d211ad3267f316b9e07a264bda7"
+  },
+  {
+   "file": "provenance/source/updated_run/pos_pairs.cells.py",
+   "source_name": "pos_pairs.ipynb",
+   "source_sha256": "5dac7b5854fe7e7996d731aac43ab00593818336301d04a9c8ac40ed0f779061",
+   "kind": "notebook",
+   "cells": [
+    5,
+    7,
+    8,
+    16,
+    18,
+    20,
+    23,
+    25,
+    27,
+    30,
+    41,
+    65,
+    66,
+    67,
+    70,
+    71,
+    72,
+    76,
+    77,
+    79,
+    80,
+    89,
+    90,
+    92
+   ],
+   "groups": [
+    "batch splitting",
+    "pair requests",
+    "parser, buckets and saved outputs",
+    "text from raw batch output",
+    "updated-run bucket assignment and by-bucket file"
+   ],
+   "substitutions": {
+    "openai_id": 5,
+    "private_path": 3
+   },
+   "sha256": "b8e34bf47d54dbb83f63ee43051baf45e615f9ff95a7a70c69e3a56f02e20980"
+  },
+  {
+   "file": "provenance/source/updated_run/questions.cells.py",
+   "source_name": "questions.ipynb",
+   "source_sha256": "55c08143653384bc13149773362e1e57ad831b3055e23bf2185605d7277a84af",
+   "kind": "notebook",
+   "cells": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    8,
+    9,
+    15,
+    30,
+    31,
+    32
+   ],
+   "groups": [
+    "question alignment by custom_id",
+    "question requests"
+   ],
+   "substitutions": {
+    "openai_id": 5,
+    "private_path": 2
+   },
+   "sha256": "41c0052a602957d4dbe0d917569f475c14a332fe02b87eded638c43e5a4df764"
+  }
+ ]
+}

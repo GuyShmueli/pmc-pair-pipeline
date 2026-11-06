@@ -1,0 +1,22 @@
+# Configuration for the synthetic end-to-end example (see examples/run_example.py).
+# Paths are relative to this file. Settings not listed here use the defaults of the
+# full pipeline (pmc_pair/config.py), i.e. the same method as config.example.yaml.
+
+paths:
+  pmc_patients: data/pmc_patients_example.csv
+  pmc_source: data/pmc_mirror          # local folder with the PMC Cloud Service layout
+  work_dir: data/work
+  release_dir: data/release
+  existing_split: null                 # the benchmark split covers the real images only: draw one
+
+workers: 2
+
+download:
+  workers: 2
+
+split:                 # same procedure and seed as the full pipeline
+  seed: 42
+  fractions: {train: 0.4, val: 0.4, test: 0.2}   # the example has 3 article groups: one per partition
+
+release:
+  images_per_zip: 4    # several small archives, as in a full pipeline run

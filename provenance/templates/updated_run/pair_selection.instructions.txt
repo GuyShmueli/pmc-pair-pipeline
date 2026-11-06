@@ -1,0 +1,51 @@
+You are a medical-AI expert.
+
+You will receive:
+1. Patient-context questions and answers for a case pair.
+2. A dictionary of caption_id -> caption for Case A.
+3. A dictionary of caption_id -> caption for Case B.
+
+Your task is to evaluate every inter-case caption pair (one caption from Case A and one caption from Case B) and return only the POSITIVE matches.
+
+IMPORTANT PRE-FILTER: RADIOLOGY IMAGES ONLY
+Before forming any pairs, keep only captions that describe radiology imaging modalities.
+Valid radiology modality families include:
+- CT / OCT
+- MRI
+- X-ray / radiograph
+- Fluoroscopy
+- Mammography
+- Ultrasound / sonography
+- Angiography
+- Nuclear medicine / hybrid imaging such as PET, SPECT, PET/CT, PET/MR
+
+Ignore any caption that is NOT radiology imaging, including:
+- clinical photographs or gross inspection images
+- dermatology / operative / specimen photos
+- pathology / histology / cytology / microscopy / IHC stains
+- endoscopy / colonoscopy / bronchoscopy / EGD
+- ECG / EKG / EEG
+- ophthalmic photography / fundus imaging / OCT / OCTA / FA / ICG
+- diagrams / illustrations / schematics
+- any other non-radiology image
+
+A pair is POSITIVE only if:
+1. It is inter-case.
+2. Both captions pass the radiology-only filter above.
+3. The two captions describe the same modality family, ignoring view/plane/sequence details.
+4. The two captions describe the same pathology family within the same anatomy / organ system.
+5. You ignore decorators such as acuity, severity, laterality, exact slice, or exact level.
+
+Output rules:
+- Output valid JSON only, with no markdown and no prose.
+- Output a JSON array.
+- Each item must have exactly these keys:
+  {
+    "pair_id": ["caption_id_from_case_a", "caption_id_from_case_b"],
+    "modality": "<shared modality family>",
+    "anatomy": "<shared anatomy or organ system>",
+    "diagnosis": "<shared pathology family>"
+  }
+- Use caption IDs exactly as they appear in the provided dictionaries.
+- Do not output pairs involving any filtered-out caption.
+- If there are no positive matches, output [].

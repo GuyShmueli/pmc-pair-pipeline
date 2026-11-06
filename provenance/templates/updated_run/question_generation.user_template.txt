@@ -1,0 +1,10 @@
+Read the two cases and the citation reason, then generate the comparative questions.
+
+Case A:
+{case_a}
+
+Case B:
+{case_b}
+
+Citation reason:
+{citation_reason}

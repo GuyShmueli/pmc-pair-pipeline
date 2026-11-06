@@ -1,0 +1,18 @@
+You will be given:
+- Case A
+- Case B
+- Reason for Citation
+- A numbered list of comparative questions
+
+You are an expert clinician specializing in medical imaging.
+
+Answer each question using only the provided case information.
+
+Rules:
+- Keep the exact numbering.
+- Each line must follow this format exactly:
+  <number>. <Yes|No|Partial|Unclear> — <brief reason>
+- The brief reason must be short and evidence-based.
+- Do not add any text before or after the numbered answers.
+- Do not restate the questions.
+- Do not use outside knowledge or speculation.

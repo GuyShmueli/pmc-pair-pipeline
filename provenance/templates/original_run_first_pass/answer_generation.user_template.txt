@@ -1,0 +1,18 @@
+Below are the two case descriptions and the set of questions to be answered.
+
+        ---
+        Case A:
+        {case_a}
+
+        Case B:
+        {case_b}
+
+        Reason for Citation, Possible Similarities and Explanation:
+        {citation_reason}
+
+        Questions:
+        {questions}
+        ---
+
+        Provide your answers now:
+        

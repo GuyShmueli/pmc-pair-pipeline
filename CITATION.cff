@@ -1,0 +1,59 @@
+cff-version: "1.2.0"
+message: >-
+  Please cite the PMC-PaIR Data Descriptor, the PMC-PaIR dataset, this software
+  and PMC-Patients, as listed under references. The license field covers only
+  the files that LICENSING.md lists as code, documentation and configuration.
+  LICENSING.md gives the terms for the other paths.
+title: "PMC-PaIR dataset construction pipeline"
+type: software
+version: "1.3.0rc1"
+license: MIT
+authors:
+  - family-names: Shmueli
+    given-names: Guy
+  - family-names: Hope
+    given-names: Tom
+keywords:
+  - medical imaging
+  - image retrieval
+  - case reports
+  - PubMed Central
+  - large language models
+  - dataset construction
+references:
+  - type: data
+    title: "PMC-PaIR: Clinically similar medical image pairs from PubMed Central case reports"
+    authors:
+      - family-names: Shmueli
+        given-names: Guy
+      - family-names: Hope
+        given-names: Tom
+    # Reserved DOI: it resolves once the dataset record is published (README.md, Release status).
+    doi: "10.5281/zenodo.23439169"
+  - type: article
+    title: >-
+      Clinically similar image pairs with modality, anatomy and diagnosis
+      labels from PubMed Central case reports
+    authors:
+      - family-names: Shmueli
+        given-names: Guy
+      - family-names: Hope
+        given-names: Tom
+  - type: article
+    title: "A large-scale dataset of patient summaries for retrieval-based clinical decision support systems"
+    authors:
+      - family-names: Zhao
+        given-names: Zhengyun
+      - family-names: Jin
+        given-names: Qiao
+      - family-names: Chen
+        given-names: Fangyuan
+      - family-names: Peng
+        given-names: Tuorui
+      - family-names: Yu
+        given-names: Sheng
+    journal: "Scientific Data"
+    volume: 10
+    start: 909
+    year: 2023
+    doi: "10.1038/s41597-023-02814-8"
