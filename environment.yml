@@ -1,0 +1,11 @@
+# Conda environment including the Tesseract OCR program.
+#   conda env create -f environment.yml && conda activate pmc-pair && pip install -e . --no-deps
+name: pmc-pair
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - tesseract>=5
+  - pip
+  - pip:
+      - -r requirements.txt

@@ -1,0 +1,87 @@
+# PMC-PaIR pipeline configuration.
+# Copy to config.yaml (git-ignored) and set the input path marked REQUIRED.
+# Relative paths are resolved against the folder of this file. Every other value below
+# is also the built-in default.
+
+paths:
+  # REQUIRED. Regenerated PMC-Patients collection (CSV, JSON or JSONL with the columns
+  # patient_uid and similar_patients). Construction code:
+  # https://github.com/zhao-zy15/PMC-Patients. Published table with these columns:
+  # https://huggingface.co/datasets/zhengyun21/PMC-Patients. "Inputs and outputs" in
+  # README.md lists all locations and what each one states about its terms.
+  pmc_patients: data/input/PMC-Patients.csv
+  # PMC Open Access collection: the PMC Cloud Service (public AWS bucket, HTTPS) or a
+  # local mirror of it.
+  pmc_source: https://pmc-oa-opendata.s3.amazonaws.com
+  work_dir: data/work            # intermediate files, checkpoints, model-response cache
+  release_dir: data/release      # release files written by export
+  # Label vocabulary and mapping rules (docs/LABEL_RULES.md). Default: label_taxonomy.json
+  # of this repository; set a path here only to use another file.
+  # label_rules: path/to/label_taxonomy.json
+  # Split file (image_id -> train/val/test) to use instead of drawing one. Default:
+  # image_splits.json of this repository, the article-disjoint benchmark split, which is
+  # checked against split.expected_sha256 and must equal the split regenerated from the
+  # pairs. Set to null to draw a split for a different set of pairs.
+  # existing_split: path/to/image_splits.json
+
+workers: 4                       # processes for image screening and article parsing
+
+download:
+  workers: 8                     # parallel HTTPS downloads
+  timeout_seconds: 60
+  retries: 3
+  require_open_access: true      # Open Access versions only
+  prefer_non_manuscript: true    # published version preferred over author manuscript
+  max_articles: null             # e.g. 200 for a trial run
+
+figures:
+  image_extensions: [".jpg", ".jpeg"]   # JPEG figure files
+
+image_filter:                    # white-background screen, then Tesseract OCR
+  white_threshold: 250           # grey level counted as white
+  white_ratio_threshold: 0.5     # flagged above this share of white pixels
+  thumbnail_size: 384            # longest side of the thumbnail used for the white screen
+  ocr_text_length_threshold: 200 # flagged above this many recognised characters
+  ocr_language: eng
+  ocr_config: "--oem 1 --psm 11 -c tessedit_do_invert=0"
+  ocr_timeout_seconds: 2.0
+  tesseract_cmd: null            # path to tesseract if it is not on PATH (e.g. Windows)
+
+animal_filter:
+  strict_non_human: false        # false: dog and cat case reports (see pmc_pair/animal_filter.py)
+
+citations:
+  title_fallback: true           # normalised title substring match after DOI, PMID and PMCID
+
+llm:
+  sync_workers: 4                # parallel requests in --sync mode
+  stages:                        # model and reasoning effort per stage
+    citation_analysis:   {model: gpt-5.4-mini, reasoning_effort: medium}
+    question_generation: {model: gpt-5.4-nano, reasoning_effort: high}
+    answer_generation:   {model: gpt-5.4-nano, reasoning_effort: high}
+    pair_selection:      {model: gpt-5.4-mini, reasoning_effort: low}
+  batch:
+    endpoint: /v1/responses
+    completion_window: 24h
+    max_requests_per_file: 50000
+    max_bytes_per_file: 190000000
+
+split:                           # article-disjoint split (pmc_pair/article_disjoint_split.py)
+  # Connected components that share a source article are merged into groups; the groups,
+  # sorted by smallest image ID (string order), are shuffled with random.Random(seed) and
+  # assigned whole: int(0.8 * N) to train, int(0.1 * N) to val, the rest to test.
+  seed: 42                       # a non-negative integer
+  fractions: {train: 0.8, val: 0.1, test: 0.1}   # share of article groups per partition
+  # SHA-256 required of paths.existing_split (null: not checked). This is the benchmark split file.
+  expected_sha256: b0b7be4be1597fa4e557fa4c5a51d0148361c2f253a604cf3df4a95a277c30eb
+  verify_regeneration: true      # paths.existing_split must equal the regenerated split
+
+release:
+  file_names:
+    image_pairs: image_pairs.json
+    image_labels: image_labels.jsonl
+    label_rules: label_taxonomy.json
+    citation_records: case_pair_citations.json
+    split: image_splits.json
+  copy_images: true              # image files in ZIP archives
+  images_per_zip: 10000

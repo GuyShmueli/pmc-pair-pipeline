@@ -1,0 +1,9 @@
+### PATIENT-CONTEXT QUERIES & ANSWERS
+{questions}
+
+{answers}
+
+### IMAGE CAPTIONS (MULTIPLE PAIRS)
+{captions_a}
+
+{captions_b}

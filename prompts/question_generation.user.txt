@@ -1,0 +1,11 @@
+Below are the two case descriptions and the reason for citation between the two. Read them carefully, then generate a concise list of question prompts (in numbered format) that compare these cases on clinically meaningful aspects.
+
+---
+Case A:
+{case_a}
+
+Case B:
+{case_b}
+
+Reason for Citation, Possible Similarities and Explanation:
+{citation_reason}
