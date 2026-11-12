@@ -5,7 +5,29 @@ You will receive:
 2. A dictionary of caption_id -> caption for Case A.
 3. A dictionary of caption_id -> caption for Case B.
 
-Your task is to evaluate every inter-case caption pair (one caption from Case A and one caption from Case B) and return only the POSITIVE matches.
+IMPORTANT PRE-FILTER: RADIOLOGY AND OPHTHALMIC IMAGING ONLY
+Before forming any pairs, keep only captions that describe radiology imaging modalities or the ophthalmic imaging types listed below.
+Allowed modality families and imaging types include:
+- CT
+- Ophthalmic photography / fundus imaging / OCT / OCTA / FA / ICG
+- MRI
+- X-ray / radiograph
+- Fluoroscopy
+- Mammography
+- Ultrasound / sonography
+- Angiography
+- Nuclear medicine / hybrid imaging such as PET, SPECT, PET/CT, PET/MR
+
+Ignore any caption outside these allowed radiology and ophthalmic imaging types, including:
+- clinical photographs or gross inspection images, except the ophthalmic imaging listed above
+- dermatology / operative / specimen photos
+- pathology / histology / cytology / microscopy / IHC stains
+- endoscopy / colonoscopy / bronchoscopy / EGD
+- ECG / EKG / EEG
+- diagrams / illustrations / schematics
+- any other image outside the allowed radiology and ophthalmic imaging types
+
+Your task is to evaluate every remaining inter-case caption pair (one caption from Case A and one caption from Case B) and return only the POSITIVE matches.
 
 A pair is POSITIVE only if:
 1. It is inter-case.
