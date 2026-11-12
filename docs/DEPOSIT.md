@@ -79,8 +79,6 @@ unchanged. No model downloads, API calls, image inference or GPU are needed.
 A passing check establishes consistency of this deposit. It does not regenerate the
 citation, annotation or licensing decisions.
 
-[See the annotation provenance record for the code, prompts, and settings used to generate the deposited annotations.](ANNOTATION_PROVENANCE.md)
-
 ## Repackage from image and caption files
 
 To obtain the exact deposited ZIPs, download them from the dataset record. To build

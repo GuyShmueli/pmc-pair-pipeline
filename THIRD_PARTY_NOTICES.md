@@ -7,13 +7,11 @@ any file. [`LICENSING.md`](LICENSING.md) gives the terms for each path of this r
 
 The pipeline reads a PMC-Patients table (`paths.pmc_patients`). This repository does not contain
 that table, the PMC-Patients code or the locally modified copy of that code.
-[`docs/ANNOTATION_PROVENANCE.md`](docs/ANNOTATION_PROVENANCE.md) describes the copy in prose.
 
 Upstream sources:
 
-- Code: <https://github.com/zhao-zy15/PMC-Patients>. `docs/ANNOTATION_PROVENANCE.md` compares the
-  local copy with commit `20cba9b40b9c7b6462da9ba7f2149e17c6bd8221`; no record names the commit
-  that was copied.
+- Code: <https://github.com/zhao-zy15/PMC-Patients>. The upstream commit used for the
+  locally modified copy is not established by the available records.
 - Dataset: <https://huggingface.co/datasets/zhengyun21/PMC-Patients> and
   <https://doi.org/10.6084/m9.figshare.c.6723465>
 - Article: Zhao et al. A large-scale dataset of patient summaries for retrieval-based clinical
