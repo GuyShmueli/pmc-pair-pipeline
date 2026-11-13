@@ -161,7 +161,7 @@ def _ids(path):
 def _pairs(root, counts):
     records = _json(root / "image_pairs.json")
     _require(isinstance(records, list) and records, "image_pairs.json: expected a nonempty list")
-    pairs, images, same_case = set(), set(), []
+    pairs, images = set(), set()
     for index, row in enumerate(records):
         where = f"image_pairs.json[{index}]"
         _require(isinstance(row, dict) and set(row) == {"pair_id", *FIELDS},
@@ -176,10 +176,8 @@ def _pairs(root, counts):
             _require(isinstance(row[field], str) and row[field].strip(), f"{where}: empty or invalid {field}")
         pairs.add(key)
         images.update(pair)
-        if _case(first) == _case(second):
-            same_case.append(list(key))
-    counts.update(image_pairs=len(records), annotation_images=len(images), within_case_pairs=len(same_case))
-    return records, pairs, images, same_case
+    counts.update(image_pairs=len(records), annotation_images=len(images))
+    return records, pairs, images
 
 
 def _citations(root, pairs, counts):
@@ -438,12 +436,7 @@ def verify_deposit(data_dir, split_file=None):
         result["counts"]["verified_top_level_files"] = len(inventory)
         result["additional_integrity_only_files"] = sorted(
             name for name in inventory if name not in REQUIRED_METADATA and not ARCHIVE_NAME.fullmatch(name))
-        records, pairs, images, same_case = _pairs(root, result["counts"])
-        if same_case:
-            result["warnings"].append(
-                f"The annotations contain {len(same_case)} within-case image pairs. These are reported "
-                "as historical annotation exceptions, not rejected or silently removed.")
-            result["within_case_pair_examples"] = same_case[:5]
+        records, pairs, images = _pairs(root, result["counts"])
         _citations(root, pairs, result["counts"])
         _labels(root, records, images, result["counts"])
         summary = _json(root / "release_summary.json")

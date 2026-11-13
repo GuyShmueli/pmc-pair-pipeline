@@ -110,7 +110,7 @@ def test_finalize_repairs_then_validates_and_deduplicates(tmp_path, monkeypatch)
         PAIR,
         {**PAIR, "pair_id": list(reversed(PAIR["pair_id"])), "diagnosis": "different"},
         {**PAIR, "pair_id": ["1_1_1", "unknown"]},
-        {**PAIR, "pair_id": ["1_1_1", "1_1_2"]},  # same case
+        {**PAIR, "pair_id": ["1_1_1", "1_1_2"]},
         {**PAIR, "pair_id": ["1_1_2", "2_1_2"], "modality": 7},
         {"pair_id": ["1_1_2", "2_1_2"], "modality": "CT", "anatomy": "lung"},
         {**PAIR, "pair_id": ["1_1_2", "2_1_2"]},

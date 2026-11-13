@@ -240,8 +240,8 @@ run.
 
 `export` writes the release to `<release_dir>.incomplete` and moves it into place only if
 all checks pass; `python -m pmc_pair check --config config.yaml` repeats them. They cover
-misaligned records (captions vs. `pair_id`, citation record for every pair), duplicate or
-same-case pairs, labels outside the vocabulary or different from labels recomputed from pairs
+misaligned records (captions vs. `pair_id`, citation record for every pair), invalid or
+duplicate pairs, labels outside the vocabulary or different from labels recomputed from pairs
 and taxonomy, splits that miss images, separate the images of a pair or of a source article, or
 differ from the split regenerated from the released pairs, missing image files, and files that
 differ from the SHA-256 recorded in `MANIFEST.json`.
@@ -262,7 +262,7 @@ files; the results below come from a copy of those files.
 |---|---|---|---|
 | Regenerating the labels | `label-images` on the deposited `image_pairs.json` and `label_taxonomy.json` | previously verified byte-identical to the deposited `image_labels.jsonl`, 86,893 records | label rules and field comparison: [`docs/LABEL_RULES.md`](docs/LABEL_RULES.md#comparing-with-existing-labels) |
 | Regenerating the split | `scripts/generate_splits.py` on the deposited `image_pairs.json` | byte-identical to `image_splits.json` | Benchmark split, above |
-| Checking the deposit | `verify-deposit` | checksums, archive contents and records agree; 19 within-case pairs are reported as warnings | [`docs/DEPOSIT.md`](docs/DEPOSIT.md) |
+| Checking the deposit | `verify-deposit` | checksums, archive contents and records agree | [`docs/DEPOSIT.md`](docs/DEPOSIT.md) |
 | Running the workflow | `examples/run_example.py` and the tests | every step runs on invented articles with ready-made responses | Quick start, above |
 | Regenerating the pair annotations | not tested with live model calls | end-to-end annotation regeneration has not been demonstrated; the label and split checks start from the deposited pairs | Not demonstrated |
 

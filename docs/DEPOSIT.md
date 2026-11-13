@@ -60,8 +60,7 @@ The checker reads all four ZIPs directly, without extracting them. It checks:
 
 `SHA256SUMS.txt` must list every deposited file except itself, including the taxonomy and
 citation records. A failed check should be resolved with the matching release files or
-corrected release metadata before use. The report lists 19 within-case image pairs under
-`warnings`; they are part of the deposited annotations and do not fail the check.
+corrected release metadata before use.
 
 To include the repository's split in the checks and write a report:
 

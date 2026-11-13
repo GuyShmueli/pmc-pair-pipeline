@@ -49,7 +49,7 @@ def refresh_archive_metadata(root, name):
     refresh_checksums(root)
 
 
-def create_deposit(root, *, within_case=False):
+def create_deposit(root, *, image_ids=None):
     """Create six tiny archives with six included images and one withheld image.
 
     Returns the root Path. Image payloads are arbitrary bytes: validation checks byte
@@ -57,9 +57,7 @@ def create_deposit(root, *, within_case=False):
     """
     root = Path(root)
     root.mkdir(parents=True, exist_ok=True)
-    images = [f"{100 + i}_1_1" for i in range(7)]
-    if within_case:
-        images[1] = "100_1_2"
+    images = list(image_ids) if image_ids is not None else [f"{100 + i}_1_1" for i in range(7)]
     included, withheld = images[:6], images[6:]
     pairs = [{"pair_id": [images[a], images[b]], "modality": "CT", "anatomy": "brain", "diagnosis": "mass"}
              for a, b in ((0, 1), (2, 3), (4, 5), (0, 6))]
@@ -224,17 +222,22 @@ class DepositTests(unittest.TestCase):
         refresh_checksums(self.root)
         self.assertFails("expected pair_id")
 
-    def test_pair_duplication_is_rejected_but_within_case_pair_reported(self):
+    def test_pair_duplication_is_rejected(self):
         pairs = json.loads((self.root / "image_pairs.json").read_text())
         pairs.append({**pairs[0], "pair_id": list(reversed(pairs[0]["pair_id"]))})
         write_json(self.root / "image_pairs.json", pairs)
         refresh_checksums(self.root)
         self.assertFails("duplicate undirected pair")
-        other = create_deposit(Path(self.temp.name) / "within-case", within_case=True)
+
+    def test_distinct_images_are_accepted_without_warnings(self):
+        images = [f"{100 + i}_1_1" for i in range(7)]
+        images[1] = "100_1_2"
+        other = create_deposit(Path(self.temp.name) / "distinct-images", image_ids=images)
         result = verify_deposit(other)
         self.assertTrue(result["passed"], result)
-        self.assertEqual(result["counts"]["within_case_pairs"], 1)
-        self.assertTrue(result["warnings"])
+        self.assertEqual(result["counts"]["image_pairs"], 4)
+        self.assertEqual(result["counts"]["annotation_images"], 7)
+        self.assertEqual(result["warnings"], [])
 
     def test_labels_recomputed_from_taxonomy(self):
         path = self.root / "image_labels.jsonl"
