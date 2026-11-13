@@ -56,7 +56,12 @@ The checker reads all four ZIPs directly, without extracting them. It checks:
 - agreement between archive contents and the included image identifiers, with withheld
   images excluded;
 - consistency of pairs, captions, citation records, labels, taxonomy, licensing and
-  availability records, and the release counts.
+  availability records, and the release counts;
+- the labels, recomputed from the pair descriptions, the taxonomy and, for
+  `nuclear_medicine`, the archived captions ([LABEL_RULES.md](LABEL_RULES.md#nuclear-medicine-from-captions)).
+  Withheld images have no caption in the deposit, so for them the caption rule is not
+  checked (`caption_rule_unchecked_images` in the report counts those that carry the
+  category without a pair that gives it).
 
 `SHA256SUMS.txt` must list every deposited file except itself, including the taxonomy and
 citation records. A failed check should be resolved with the matching release files or

@@ -238,11 +238,19 @@ def test_release_checks_detect_consequential_errors(example, tmp_path):
     def change_a_label(image_labels):
         image_labels[0]["labels"]["modality"] = ["ct"]
 
+    def name_pet_in_a_caption(pairs):  # the labels then lack nuclear_medicine for that image
+        pairs[0]["captions"][0]["caption"] += " PET/CT shows uptake."
+
+    def empty_a_caption(pairs):
+        pairs[0]["captions"][0]["caption"] = None
+
     assert "duplicate pair" in corrupt_and_check(example, tmp_path / "a", "image_pairs.json",
                                                  duplicate_reversed_pair)
     assert "not aligned" in corrupt_and_check(example, tmp_path / "b", "image_pairs.json", misalign_captions)
     assert "cross partitions" in corrupt_and_check(example, tmp_path / "c", "image_splits.json", split_a_pair)
     assert "recomputed" in corrupt_and_check(example, tmp_path / "d", "image_labels.jsonl", change_a_label)
+    assert "recomputed" in corrupt_and_check(example, tmp_path / "f", "image_pairs.json", name_pet_in_a_caption)
+    assert "empty caption" in corrupt_and_check(example, tmp_path / "g", "image_pairs.json", empty_a_caption)
 
     release = tmp_path / "e" / "release"  # two image files swapped inside an archive after export
     shutil.copytree(example["paths"]["release_dir"], release)
@@ -337,6 +345,45 @@ def test_label_mapping_reproduces_the_paper_and_known_examples():
     assert by_image["d_1_1"] == {field: ["other"] for field in labels.FIELDS}
     assert (by_image["b_1_1"]["diagnosis"], by_image["c_1_1"]["diagnosis"]) == (["mass_or_lesion"],
                                                                               ["infection_or_abscess"])
+
+
+def test_nuclear_medicine_is_also_read_from_the_image_caption():
+    rules = labels.load_label_rules(TAXONOMY)
+    found = labels.caption_categories({
+        "a_1_1": "(A) Contrast-enhanced CT shows a mass. (B) 18F-FDG PET/CT shows intense uptake.",
+        "b_1_1": "Whole-body bone scintigraphy with 99mTc-MDP.",
+        "c_1_1": "Chest X ray of the patient's pet dog.",                        # the ordinary word
+        "d_1_1": "Patch test with levocetirizine (10% in Pet.) was positive.",  # petrolatum
+        "e_1_1": "Axial CT of the abdomen.",
+        "f_1_1": "Positron emission tomography.",
+        "g_1_1": "Coronal PET/CT of the chest.",                                 # the abbreviation alone
+    }, rules)
+    assert found == {"a_1_1": ["fdg", "pet"], "b_1_1": ["scintigraphy"], "f_1_1": ["positron emission tomography"],
+                     "g_1_1": ["pet"]}
+
+    # the category joins the pair categories; "other" goes when it is the only other category;
+    # images that share no pair still receive no labels
+    pairs = [{"pair_id": ["a_1_1", "e_1_1"], "modality": "CT", "anatomy": "liver", "diagnosis": "tumor"},
+             {"pair_id": ["f_1_1", "c_1_1"], "modality": "unknown modality", "anatomy": "liver", "diagnosis": "tumor"}]
+    by_image = {r["image_id"]: r["labels"]["modality"]
+                for r in labels.combine_image_labels(labels.pair_categories(pairs, rules), "other", found)}
+    assert by_image == {"a_1_1": ["ct", "nuclear_medicine"], "c_1_1": ["other"], "e_1_1": ["ct"],
+                        "f_1_1": ["nuclear_medicine"]}
+
+
+def test_label_images_reads_the_captions_of_the_annotation_ready_pairs(tmp_path):
+    work = tmp_path / "work"
+    cfg = {"paths": {"work_dir": str(work), "label_rules": str(TAXONOMY)}}
+    write_jsonl([{"pair_id": ["a_1_1", "b_1_1"], "modality": "CT", "anatomy": "liver", "diagnosis": "tumor"}],
+                work / "image_pairs" / "image_pairs.jsonl")
+    write_jsonl([{"case_a_captions": {"a_1_1": "(A) Contrast-enhanced CT. (B) PET/CT shows uptake."},
+                  "case_b_captions": {"b_1_1": "Axial CT of the liver."}}], work / "pairs" / "annotation_ready.jsonl")
+    stats = labels.label_images(cfg)
+    by_image = {r["image_id"]: r["labels"]["modality"] for r in read_jsonl(work / "labels" / "image_labels.jsonl")}
+    assert by_image == {"a_1_1": ["ct", "nuclear_medicine"], "b_1_1": ["ct"]}
+    assert read_json(work / "labels" / "caption_matches.json") == {
+        "a_1_1": {"words": ["pet"], "also_from_pair_descriptions": False}}
+    assert stats["caption_rule"]["images_with_the_category_only_from_the_caption"] == 1
 
 
 def test_pmc_cloud_listing_and_version_choice():

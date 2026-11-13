@@ -35,7 +35,7 @@ DATA_DIR = EXAMPLE_DIR / "data"
 # ------------------------------------------------------------------ images
 
 def scan_image(seed, kind):
-    """Dark, scan-like greyscale picture (passes the diagram screen)."""
+    """Dark, scan-like grayscale picture (passes the diagram screen)."""
     rng = random.Random(seed)
     image = Image.new("L", (512, 512), 18)
     draw = ImageDraw.Draw(image)

@@ -6,7 +6,7 @@ Only errors that would make the dataset wrong or misaligned are checked:
     one caption per image across records,
   * labels: exactly one record per paired image; categories from the released
     vocabulary; "other" never mixed with other categories; identical to the labels
-    recomputed from the released pairs and label taxonomy,
+    recomputed from the released pairs, their captions and the label taxonomy,
   * split: covers exactly the paired images, valid partition names, no source article
     and no pair across partitions; with split settings, identical to the split
     regenerated from the released pairs (article_disjoint_split.py),
@@ -40,7 +40,7 @@ def check_release(release_dir, names=None, expect_images=False, split_settings=N
     when given, the split must equal the split regenerated from the released pairs.
     """
     from .config import DEFAULT_CONFIG
-    from .labels import FIELDS, combine_image_labels, load_label_rules, pair_categories
+    from .labels import FIELDS, caption_categories, combine_image_labels, load_label_rules, pair_categories
 
     release_dir = Path(release_dir)
     names = {**DEFAULT_CONFIG["release"]["file_names"], **(names or {})}
@@ -105,12 +105,13 @@ def check_release(release_dir, names=None, expect_images=False, split_settings=N
             elif rules["other"] in values and len(values) > 1:
                 problem(f"image_labels {record['image_id']}: '{rules['other']}' combined with other {field} labels")
     recomputed = {r["image_id"]: r["labels"] for r in combine_image_labels(
-        pair_categories([record for record in pairs if set(record) == PAIR_KEYS], rules), rules["other"])}
+        pair_categories([record for record in pairs if set(record) == PAIR_KEYS], rules), rules["other"],
+        caption_categories({i: c for i, c in caption_of.items() if isinstance(c, str)}, rules))}  # empty ones reported above
     different = [record.get("image_id") for record in labels
                  if recomputed.get(record.get("image_id")) != record.get("labels")]
     if different:
         problem(f"image_labels: {len(different)} of {len(labels)} images differ from the labels recomputed "
-                f"from image_pairs and the label taxonomy, e.g. {different[:3]}")
+                f"from image_pairs (descriptions and captions) and the label taxonomy, e.g. {different[:3]}")
 
     # ---------------------------------------------------------- split
     try:

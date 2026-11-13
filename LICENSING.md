@@ -1,11 +1,11 @@
 # Licensing
 
 Different terms apply to different files of this repository. Every file belongs to one class
-below. The MIT licence in [`LICENSE`](LICENSE) applies to the first class only.
+below. The MIT license in [`LICENSE`](LICENSE) applies to the first class only.
 
 | Class | Paths | Terms |
 |---|---|---|
-| Code, documentation and configuration | `pmc_pair/**`, `scripts/**`, `tests/*.py`, `docs/**`, `README.md`, `LICENSE`, `LICENSING.md`, `THIRD_PARTY_NOTICES.md`, `CITATION.cff`, `SHA256SUMS`, `config.example.yaml`, `pyproject.toml`, `requirements.txt`, `environment.yml`, `.gitattributes`, `.gitignore` | MIT licence in `LICENSE` |
+| Code, documentation and configuration | `pmc_pair/**`, `scripts/**`, `tests/*.py`, `docs/**`, `README.md`, `LICENSE`, `LICENSING.md`, `THIRD_PARTY_NOTICES.md`, `CITATION.cff`, `SHA256SUMS`, `config.example.yaml`, `pyproject.toml`, `requirements.txt`, `environment.yml`, `.gitattributes`, `.gitignore` | MIT license in `LICENSE` |
 | Non-code files and examples | `image_splits.json`, `label_taxonomy.json`, `prompts/**`, `tests/label_examples.json`, `examples/**` | Not yet set |
 
 A path that is not in this table is not covered by `LICENSE`.
@@ -14,13 +14,13 @@ A path that is not in this table is not covered by `LICENSE`.
 
 `LICENSE` holds the standard MIT text. In this repository, its words "this software and
 associated documentation files" mean the files of the first class and no others. It grants no
-licence for the other class. A wheel built from `pyproject.toml` holds only the `pmc_pair`
+license for the other class. A wheel built from `pyproject.toml` holds only the `pmc_pair`
 package, so all of its code is in the first class.
 
 ## Files with terms not yet set
 
 The terms for the non-code files and the examples are not yet set. `LICENSE` grants no
-licence for them.
+license for them.
 
 ## Material outside this repository
 

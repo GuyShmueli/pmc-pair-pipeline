@@ -1,18 +1,25 @@
-"""Step 11 (label-images): image-level labels from the pair descriptions.
+"""Step 11 (label-images): image-level labels from the pair descriptions and, for nuclear
+medicine, from the image captions.
 
 The free-text modality, anatomy and diagnosis of every image pair are mapped to the
 controlled vocabulary of the label taxonomy (paths.label_rules, released as
 label_taxonomy.json) with its predefined rules; docs/LABEL_RULES.md describes the
-procedure. The categories of a pair are assigned to both of its images. Every image
-receives the union of the categories of all pairs that contain it, sorted, with "other"
+procedure. The categories of a pair are assigned to both of its images. A pair
+description names only the modality its two figures share, so nuclear-medicine imaging
+shown beside CT or MRI in a compound figure, or a fused PET/CT image paired with a CT
+image, is often missing from it; the taxonomy's nuclear_medicine rule is therefore also
+applied to the caption of every image (CAPTION_RULE). Every image receives the union of
+the categories of all pairs that contain it and of its caption, sorted, with "other"
 only when no other category remains. A compound figure is one image, whose labels may
 come from different panels.
 
 Outputs in <work_dir>/labels/:
   image_labels.jsonl      one {"image_id", "labels": {modality, anatomy, diagnosis}} per image
-  phrase_mappings.json    every distinct description per field: normalised text,
+  phrase_mappings.json    every distinct description per field: normalized text,
                           categories, the matches behind them, number of pairs using it
-  unmatched_phrases.csv   descriptions that no rule recognises (category "other")
+  caption_matches.json    images whose caption names nuclear-medicine imaging: the matched
+                          words and whether a pair description also gives the category
+  unmatched_phrases.csv   descriptions that no rule recognizes (category "other")
   stats.json              category counts per field
 """
 
@@ -32,6 +39,11 @@ OTHER = "other"
 NEGATIVE = "normal_or_negative_report"        # "no abscess", "normal study"
 RESOLVED = "postoperative_or_resolved_state"  # "resolved abscess", "postoperative changes"
 VASCULATURE = "vasculature"                   # anatomy category of vessel phrases
+# The category that is also read from each image's own caption, with the taxonomy rules of
+# that category. Lower-case "pet" is also an ordinary word ("pet dog", "10% in pet." for
+# petrolatum in patch tests), so the abbreviation PET counts in a caption only in capitals.
+CAPTION_RULE = ("modality", "nuclear_medicine")
+CAPITAL_PET = re.compile(r"\bPETs?\b")
 
 
 def normalize(text, replacements):
@@ -49,7 +61,7 @@ def normalize(text, replacements):
 
 
 def alias_pattern(alias, replacements, regular_plurals):
-    """Regular expression for one alias, normalised like the descriptions. With regular
+    """Regular expression for one alias, normalized like the descriptions. With regular
     plurals, a final consonant + "y" also matches "ies" ("artery", "arteries") and other
     aliases ending in a letter other than "s" also match with a final "s"."""
     normalized = normalize(alias, replacements)
@@ -111,7 +123,7 @@ def find_matches(text, rules):
 
 def classify(text, field, rules):
     """{"normalized", "labels", "matches"} for one description; "labels" is the sorted list
-    of categories (["other"] if no rule recognises the description)."""
+    of categories (["other"] if no rule recognizes the description)."""
     matching, field_rules = rules["matching"], rules["fields"][field]["rules"]
     text = normalize(text, rules["replacements"])
     labels, evidence = set(), []
@@ -161,7 +173,7 @@ def classify(text, field, rules):
 
 
 def map_description(text, field, rules):
-    """Sorted categories of one free-text description (["other"] if nothing is recognised)."""
+    """Sorted categories of one free-text description (["other"] if nothing is recognized)."""
     return classify(text, field, rules)["labels"]
 
 
@@ -178,14 +190,33 @@ def pair_categories(pairs, rules):
             for pair in pairs]
 
 
-def combine_image_labels(pair_labels, other):
-    """Union of the pair categories per image, sorted by image id; "other" only if nothing
-    else remains."""
+def caption_categories(captions, rules):
+    """{image_id: matched words} for the images whose caption ({image_id: caption}) names
+    the category of CAPTION_RULE, found with that category's taxonomy rules in the
+    normalized caption."""
+    field, label = CAPTION_RULE
+    category_rules = [rule for rule in rules["fields"][field]["rules"] if rule["label"] == label]
+    found = {}
+    for image_id, caption in captions.items():
+        words = sorted({hit["text"] for hit in find_matches(normalize(caption, rules["replacements"]), category_rules)})
+        if set(words) - {"pet", "pets"} or (words and CAPITAL_PET.search(caption)):
+            found[image_id] = words
+    return found
+
+
+def combine_image_labels(pair_labels, other, caption_found=()):
+    """Union of the pair categories per image, plus the category of CAPTION_RULE for the
+    images in caption_found (caption_categories), sorted by image id; "other" only if
+    nothing else remains."""
     collected = defaultdict(lambda: {field: set() for field in FIELDS})
     for record in pair_labels:
         for image_id in record["pair_id"]:
             for field in FIELDS:
                 collected[image_id][field].update(record["labels"][field])
+    field, label = CAPTION_RULE
+    for image_id in caption_found:
+        if image_id in collected:  # images that share no pair receive no labels
+            collected[image_id][field].add(label)
     image_labels = []
     for image_id in sorted(collected):
         labels = {}
@@ -197,8 +228,14 @@ def combine_image_labels(pair_labels, other):
 
 
 def label_images(cfg):
+    from .prepare_pairs import annotation_ready_pairs
+
     rules = load_label_rules(cfg["paths"]["label_rules"])
     pairs = list(iter_jsonl(work_dir(cfg, "image_pairs") / "image_pairs.jsonl"))
+    captions = {}  # the captions exactly as the pair-selection model received them (as in export)
+    for pair in annotation_ready_pairs(cfg):
+        captions.update(pair["case_a_captions"])
+        captions.update(pair["case_b_captions"])
 
     # every distinct description is mapped once
     mappings = {field: {} for field in FIELDS}
@@ -207,11 +244,18 @@ def label_images(cfg):
             mappings[field][phrase] = {**classify(phrase, field, rules), "pair_frequency": count}
     pair_labels = [{"pair_id": pair["pair_id"], "labels": {f: mappings[f][pair[f]]["labels"] for f in FIELDS}}
                    for pair in pairs]
-    image_labels = combine_image_labels(pair_labels, rules["other"])
+    paired = sorted({image_id for pair in pairs for image_id in pair["pair_id"]})
+    caption_found = caption_categories({image_id: captions[image_id] for image_id in paired}, rules)
+    image_labels = combine_image_labels(pair_labels, rules["other"], caption_found)
 
     out_dir = work_dir(cfg, "labels")
     write_jsonl(image_labels, out_dir / "image_labels.jsonl", compact=True)
     write_json(mappings, out_dir / "phrase_mappings.json", sort_keys=True)
+    caption_field, caption_label = CAPTION_RULE
+    from_pairs = {image_id for record in pair_labels if caption_label in record["labels"][caption_field]
+                  for image_id in record["pair_id"]}
+    write_json({image_id: {"words": words, "also_from_pair_descriptions": image_id in from_pairs}
+                for image_id, words in caption_found.items()}, out_dir / "caption_matches.json", sort_keys=True)
     with open(out_dir / "unmatched_phrases.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["field", "phrase", "normalized", "pair_frequency"])
@@ -223,6 +267,10 @@ def label_images(cfg):
     stats = {"label_rules_file": Path(cfg["paths"]["label_rules"]).name, "taxonomy_version": rules["version"],
              "pairs": len(pairs), "images": len(image_labels),
              "taxonomy_expected_unique_images": rules["expected_unique_images"],  # images of the released annotations
+             "caption_rule": {"field": caption_field, "category": caption_label,
+                              "images_with_matching_caption": len(caption_found),
+                              "images_with_the_category_only_from_the_caption":
+                                  sum(image_id not in from_pairs for image_id in caption_found)},
              "fields": {}}
     for field in FIELDS:
         counts = Counter(label for record in image_labels for label in record["labels"][field])
@@ -239,7 +287,9 @@ def label_images(cfg):
         }
     write_json(stats, out_dir / "stats.json")
     published = rules["expected_unique_images"]
-    log(cfg, f"label-images: {len(image_labels)} images labelled"
+    log(cfg, f"label-images: {len(image_labels)} images labeled"
              + (f" (the taxonomy file states {published} for the published release)" if published else "")
-             + "; 'other' per field " + str({f: stats["fields"][f]["other_images"] for f in FIELDS}))
+             + "; 'other' per field " + str({f: stats["fields"][f]["other_images"] for f in FIELDS})
+             + f"; {caption_label} from captions: {len(caption_found)} images, "
+               f"{stats['caption_rule']['images_with_the_category_only_from_the_caption']} of them not from a pair")
     return stats

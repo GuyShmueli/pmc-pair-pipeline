@@ -205,8 +205,8 @@ def _citations(root, pairs, counts):
     counts.update(citation_records=len(records), citation_records_with_passages=passages)
 
 
-def _labels(root, records, images, counts):
-    from .labels import combine_image_labels, load_label_rules, pair_categories
+def _labels(root, records, images, counts, captions):
+    from .labels import caption_categories, combine_image_labels, load_label_rules, pair_categories
 
     # Parse strictly before the rule loader reads the same file.
     taxonomy = _json(root / "label_taxonomy.json")
@@ -216,8 +216,14 @@ def _labels(root, records, images, counts):
     if expected_count is not None:
         _require(type(expected_count) is int and expected_count == len(images),
                  "label_taxonomy.json: expected_unique_images differs from paired images")
-    expected = {r["image_id"]: r["labels"] for r in combine_image_labels(pair_categories(records, rules), rules["other"])}
-    seen = set()
+    categories = pair_categories(records, rules)
+    found = caption_categories({image: captions[image] for image in images if image in captions}, rules)
+    expected = {r["image_id"]: r["labels"] for r in combine_image_labels(categories, rules["other"], found)}
+    # Withheld images have no caption in the deposit, so the caption rule cannot be checked
+    # for them: their labels may carry its category or not.
+    uncaptioned = images - captions.keys()
+    alternative = {r["image_id"]: r["labels"] for r in combine_image_labels(categories, rules["other"], uncaptioned)}
+    seen, unchecked = set(), 0
     with (root / "image_labels.jsonl").open(encoding="utf-8") as handle:
         for index, line in enumerate(handle, 1):
             where = f"image_labels.jsonl:{index}"
@@ -234,11 +240,13 @@ def _labels(root, records, images, counts):
                          f"{where}: invalid {field} labels")
                 _require(values == sorted(set(values)), f"{where}: unsorted or repeated {field} labels")
                 _require(set(values) <= set(rules["fields"][field]["categories"]), f"{where}: unknown {field} category")
-            _require(row["labels"] == expected.get(image),
-                     f"{where}: labels for {image} differ from recomputed taxonomy mapping")
+            matches = row["labels"] == expected.get(image)
+            if not matches and image in uncaptioned and row["labels"] == alternative.get(image):
+                matches, unchecked = True, unchecked + 1
+            _require(matches, f"{where}: labels for {image} differ from recomputed taxonomy mapping")
             seen.add(image)
     _require(seen == images, "image_labels.jsonl: image coverage differs from image_pairs.json")
-    counts["labelled_images"] = len(seen)
+    counts.update(labelled_images=len(seen), caption_rule_images=len(found), caption_rule_unchecked_images=unchecked)
 
 
 def _integer(value, where):
@@ -376,7 +384,8 @@ def _metadata(root, records, images, summary, inventory, counts):
 
 
 def _archives(root, archive_records, expected_members, counts):
-    total, payload_bytes = 0, 0
+    """Verify every archive member; return {image_id: caption} of the verified captions."""
+    total, payload_bytes, captions = 0, 0, {}
     for name, record in archive_records.items():
         expected = expected_members[name]
         with zipfile.ZipFile(root / name) as archive:
@@ -396,19 +405,21 @@ def _archives(root, archive_records, expected_members, counts):
                 _require(info.file_size == size, f"{name}/{member}: size differs from file_manifest.csv")
                 actual_digest, actual_size = hashlib.sha256(), 0
                 decoder = codecs.getincrementaldecoder("utf-8")() if kind == "caption" else None
-                caption_has_text = False
+                text = []
                 # Streaming through EOF makes zipfile check the CRC as well as our SHA-256.
                 with archive.open(info) as handle:
                     for block in iter(lambda: handle.read(1 << 20), b""):
                         actual_digest.update(block)
                         actual_size += len(block)
                         if decoder is not None:
-                            caption_has_text |= bool(decoder.decode(block).strip())
+                            text.append(decoder.decode(block))
                 if decoder is not None:
-                    caption_has_text |= bool(decoder.decode(b"", final=True).strip())
-                    _require(caption_has_text, f"{name}/{member}: caption is empty or whitespace only")
+                    text.append(decoder.decode(b"", final=True))
+                    _require(bool("".join(text).strip()), f"{name}/{member}: caption is empty or whitespace only")
                 _require(actual_size == size and actual_digest.hexdigest() == digest,
                          f"{name}/{member}: payload size or SHA-256 differs from file_manifest.csv")
+                if decoder is not None:
+                    captions[PurePosixPath(member).stem] = "".join(text)  # file_manifest.csv: captions/<image_id>.txt
                 payload_bytes += actual_size
             _require(seen == expected.keys(), f"{name}: missing manifest members {sorted(expected.keys() - seen)[:5]}")
             _require(type(record.get("entries")) is int and record["entries"] == len(seen), f"release_summary.json: entries differs for {name}")
@@ -416,6 +427,7 @@ def _archives(root, archive_records, expected_members, counts):
             _require(type(record.get("images")) is int and record["images"] == image_count, f"release_summary.json: images differs for {name}")
             total += len(seen)
     counts.update(archives=len(archive_records), verified_zip_members=total, verified_payload_bytes=payload_bytes)
+    return captions
 
 
 def verify_deposit(data_dir, split_file=None):
@@ -438,11 +450,12 @@ def verify_deposit(data_dir, split_file=None):
             name for name in inventory if name not in REQUIRED_METADATA and not ARCHIVE_NAME.fullmatch(name))
         records, pairs, images = _pairs(root, result["counts"])
         _citations(root, pairs, result["counts"])
-        _labels(root, records, images, result["counts"])
         summary = _json(root / "release_summary.json")
         _require(isinstance(summary, dict), "release_summary.json: expected an object")
         archive_records, expected_members = _metadata(root, records, images, summary, inventory, result["counts"])
-        _archives(root, archive_records, expected_members, result["counts"])
+        captions = _archives(root, archive_records, expected_members, result["counts"])
+        # Labels last: the nuclear-medicine caption rule reads the captions verified in the archives.
+        _labels(root, records, images, result["counts"], captions)
         if split_file is not None:
             split = read_split(split_file)
             problems = split_problems(split, images, pairs)

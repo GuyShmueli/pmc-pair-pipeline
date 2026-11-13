@@ -11,7 +11,7 @@ Steps in order (each one reads the outputs of the previous ones from the work di
   llm STAGE         language-model stages on the annotation-ready pairs: citation-analysis,
                     question-generation, answer-generation, pair-selection
   finalize-pairs    validate the proposed image pairs
-  label-images      image-level labels from the pair descriptions
+  label-images      image-level labels from the pair descriptions (nuclear medicine also from captions)
   split             article-disjoint train / val / test (the benchmark split, or drawn with seed 42)
   export            release files + checks + MANIFEST.json
 
@@ -50,7 +50,7 @@ STEP_HELP = {
     "filter-images": "flag diagrams and text-heavy figures",
     "prepare-pairs": "check case pairs and gather the model inputs",
     "finalize-pairs": "validate the proposed image pairs",
-    "label-images": "image-level labels from the pair descriptions",
+    "label-images": "image-level labels from the pair descriptions (nuclear medicine also from captions)",
     "split": "article-disjoint train / val / test (benchmark split or seed 42)",
     "export": "write release files, checks and MANIFEST.json",
 }

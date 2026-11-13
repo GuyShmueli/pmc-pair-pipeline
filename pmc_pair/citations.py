@@ -1,7 +1,7 @@
 """Citation verification between the two articles of a case pair.
 
 A citation link is confirmed when one article's reference list contains the other
-article: DOI, PMID and PMCID are checked in this order, then the normalised title as a
+article: DOI, PMID and PMCID are checked in this order, then the normalized title as a
 substring of a reference title. A match in either direction confirms the link.
 """
 

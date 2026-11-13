@@ -1,10 +1,10 @@
 """Step 4 (filter-images): flag likely diagrams and text-heavy figures.
 
 Procedure (thresholds in the configuration, image_filter):
-  1. white-background screen on a 384-px thumbnail: fraction of grey levels >= 250;
+  1. white-background screen on a 384-px thumbnail: fraction of gray levels >= 250;
      a ratio above 0.5 flags the image,
   2. otherwise OCR (Tesseract, --oem 1 --psm 11 -c tessedit_do_invert=0, 2-second
-     timeout); more than 200 recognised characters flags the image.
+     timeout); more than 200 recognized characters flags the image.
 Images whose OCR times out are kept (not flagged). OCR output depends on the Tesseract
 version, its language data and (through the timeout) on machine speed; the Tesseract
 version is recorded and every decision is logged in image_filter.jsonl.
@@ -54,7 +54,7 @@ def tesseract_version(settings):
 
 
 def white_ratio(path, white_threshold, thumbnail_size):
-    """Fraction of greyscale pixels >= white_threshold on a small thumbnail."""
+    """Fraction of grayscale pixels >= white_threshold on a small thumbnail."""
     with Image.open(path) as image:
         if image.format == "JPEG":
             image.draft("L", (thumbnail_size, thumbnail_size))  # fast JPEG downscaling on load

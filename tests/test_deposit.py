@@ -245,6 +245,38 @@ class DepositTests(unittest.TestCase):
         refresh_checksums(self.root)
         self.assertFails("differ from recomputed")
 
+    def test_nuclear_medicine_caption_rule_reads_the_archived_captions(self):
+        taxonomy_path, labels_path = self.root / "label_taxonomy.json", self.root / "image_labels.jsonl"
+        taxonomy = json.loads(taxonomy_path.read_text(encoding="utf-8"))
+        # every archived caption of the fixture contains "café"; the withheld image has no caption
+        taxonomy["categories"]["modality"]["nuclear_medicine"] = "Nuclear medicine"
+        taxonomy["rules"]["modality"].append({"id": "modality_nm", "label": "nuclear_medicine", "priority": 1,
+                                              "aliases": ["café"]})
+        write_json(taxonomy_path, taxonomy)
+        refresh_checksums(self.root)
+        self.assertFails("differ from recomputed")
+
+        withheld = set((self.root / "withheld_image_ids.txt").read_text().split())
+        rows = [json.loads(line) for line in labels_path.read_text(encoding="utf-8").splitlines()]
+
+        def write_labels(with_category):
+            for row in rows:
+                row["labels"]["modality"] = ["ct", "nuclear_medicine"] if row["image_id"] in with_category else ["ct"]
+            labels_path.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+            refresh_checksums(self.root)
+            return verify_deposit(self.root)
+
+        included = {row["image_id"] for row in rows} - withheld
+        result = write_labels(included)
+        self.assertTrue(result["passed"], result)
+        self.assertEqual((result["counts"]["caption_rule_images"], result["counts"]["caption_rule_unchecked_images"]), (6, 0))
+        # without its caption in the deposit, a withheld image may carry the category or not
+        result = write_labels(included | withheld)
+        self.assertTrue(result["passed"], result)
+        self.assertEqual(result["counts"]["caption_rule_unchecked_images"], 1)
+        write_labels(included - {sorted(included)[0]})
+        self.assertFails("differ from recomputed")
+
     def test_availability_and_summary_are_recomputed(self):
         path = self.root / "pair_availability.csv"
         path.write_text(path.read_text().replace("True,True,True", "False,True,True", 1))

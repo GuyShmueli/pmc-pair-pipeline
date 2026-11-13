@@ -19,13 +19,13 @@ interrupted continues where it stopped.
 | Folder | Main files |
 |---|---|
 | `cases/` | `cases.jsonl` (`case_id`, `pmcid`), `case_pairs.jsonl` (`case_pair_id`, `case_ids`) |
-| `articles/` | `PMC<id>/article.xml`, `metadata.json`, JPEG files; `download_log.jsonl` (checkpoint: status, version, licence per article) |
+| `articles/` | `PMC<id>/article.xml`, `metadata.json`, JPEG files; `download_log.jsonl` (checkpoint: status, version, license per article) |
 | `figures/` | `figures.jsonl` (`image_id`, `case_id`, `figure_index`, `figure_xml_id`, `image_file`, `caption`, …), `figure_issues.jsonl` |
 | `image_filter/` | `image_filter.jsonl` (checkpoint: white ratio, OCR character count, `flagged`, `reason`, `settings_id` of the thresholds used) |
 | `pairs/` | `articles.jsonl`, `candidate_status.jsonl` (first failed check of every candidate pair), `citation_pairs.jsonl` (pairs with a confirmed citation: titles, abstracts, citation passages), `annotation_ready.jsonl` (case descriptions and captions) |
 | `llm/<stage>/` | `responses.jsonl` (cache, checkpoint), `outputs.jsonl` (answers of the current requests), `requests/` (batch input files), `batch_outputs/`, `batches.json`, `failures.jsonl` |
 | `image_pairs/` | `image_pairs.jsonl` (validated pairs), `rejected_proposals.jsonl` (with reasons), `response_repairs.jsonl` (every attempted response repair; see below), `stats.json` |
-| `labels/` | `image_labels.jsonl` (copied into the release), `phrase_mappings.json` (categories and matches of every distinct description), `unmatched_phrases.csv` (descriptions labelled `other`) |
+| `labels/` | `image_labels.jsonl` (copied into the release), `phrase_mappings.json` (categories and matches of every distinct description), `caption_matches.json` (images whose caption names nuclear-medicine imaging, with the matched words), `unmatched_phrases.csv` (descriptions labeled `other`) |
 | `split/` | `split.json` (the split used, in the format of `image_splits.json`), `stats.json` (images, pairs, groups, components and source articles per partition; integrity counts; warnings; SHA-256) |
 | `pipeline.log` | log of all steps |
 

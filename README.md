@@ -169,7 +169,7 @@ archives and licensing metadata, and does not contain a split file. Its pair rec
 `captions` field, because the captions are in the ZIPs. Its layout is described in
 [`docs/DEPOSIT.md`](docs/DEPOSIT.md).
 
-Not included: the regeneration of PMC-Patients (use the PMC-Patients code), the licence
+Not included: the regeneration of PMC-Patients (use the PMC-Patients code), the license
 review, withholding decisions and creation of the deposit's metadata files, and the
 experiments of the Data Descriptor's Technical Validation.
 
@@ -241,8 +241,8 @@ run.
 `export` writes the release to `<release_dir>.incomplete` and moves it into place only if
 all checks pass; `python -m pmc_pair check --config config.yaml` repeats them. They cover
 misaligned records (captions vs. `pair_id`, citation record for every pair), invalid or
-duplicate pairs, labels outside the vocabulary or different from labels recomputed from pairs
-and taxonomy, splits that miss images, separate the images of a pair or of a source article, or
+duplicate pairs, labels outside the vocabulary or different from labels recomputed from pairs,
+captions and taxonomy, splits that miss images, separate the images of a pair or of a source article, or
 differ from the split regenerated from the released pairs, missing image files, and files that
 differ from the SHA-256 recorded in `MANIFEST.json`.
 
@@ -260,7 +260,7 @@ files; the results below come from a copy of those files.
 
 | Kind | What is run | Result | Where |
 |---|---|---|---|
-| Regenerating the labels | `label-images` on the deposited `image_pairs.json` and `label_taxonomy.json` | previously verified byte-identical to the deposited `image_labels.jsonl`, 86,893 records | label rules and field comparison: [`docs/LABEL_RULES.md`](docs/LABEL_RULES.md#comparing-with-existing-labels) |
+| Regenerating the labels | the label comparison of [`docs/LABEL_RULES.md`](docs/LABEL_RULES.md#comparing-with-existing-labels) on the deposited `image_pairs.json`, `label_taxonomy.json` and `image_labels.jsonl` and the extracted captions | no difference in any field for the 86,893 records (the 68 withheld images have no caption file; the caption rule changes none of them) | label rules: [`docs/LABEL_RULES.md`](docs/LABEL_RULES.md) |
 | Regenerating the split | `scripts/generate_splits.py` on the deposited `image_pairs.json` | byte-identical to `image_splits.json` | Benchmark split, above |
 | Checking the deposit | `verify-deposit` | checksums, archive contents and records agree | [`docs/DEPOSIT.md`](docs/DEPOSIT.md) |
 | Running the workflow | `examples/run_example.py` and the tests | every step runs on invented articles with ready-made responses | Quick start, above |
@@ -278,12 +278,12 @@ examples/        synthetic example (generator, config, runner)
 tests/           tests for consequential errors
 scripts/         split regeneration (generate_splits.py); SLURM template for CPU-bound steps
 docs/            method, outputs, label taxonomy, Zenodo validation and repackaging
-LICENSE          MIT licence; LICENSING.md lists the paths it covers
+LICENSE          MIT license; LICENSING.md lists the paths it covers
 LICENSING.md     the terms for each path of the repository
 THIRD_PARTY_NOTICES.md   pointers to the sources of the articles and of PMC-Patients
 ```
 
-## Citation and licence
+## Citation and license
 
 Please cite the PMC-PaIR Data Descriptor, the dataset (*PMC-PaIR: Clinically similar medical
 image pairs from PubMed Central case reports*, DOI 10.5281/zenodo.23439169, see
@@ -292,8 +292,8 @@ PMC-Patients (Zhao et al., *Scientific Data* 10, 909, 2023). Citation metadata:
 [`CITATION.cff`](CITATION.cff).
 
 The files that [`LICENSING.md`](LICENSING.md) lists as code, documentation and configuration are
-released under the MIT licence ([`LICENSE`](LICENSE)). `LICENSING.md` also gives the terms for the
-other paths. The licence does not cover data: images and captions keep the terms
+released under the MIT license ([`LICENSE`](LICENSE)). `LICENSING.md` also gives the terms for the
+other paths. The license does not cover data: images and captions keep the terms
 recorded for each image in the deposit's `licenses.csv`, and
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) points to the sources of the articles and of
 PMC-Patients, which state their own terms.

@@ -38,10 +38,10 @@ figures:
   image_extensions: [".jpg", ".jpeg"]   # JPEG figure files
 
 image_filter:                    # white-background screen, then Tesseract OCR
-  white_threshold: 250           # grey level counted as white
+  white_threshold: 250           # gray level counted as white
   white_ratio_threshold: 0.5     # flagged above this share of white pixels
   thumbnail_size: 384            # longest side of the thumbnail used for the white screen
-  ocr_text_length_threshold: 200 # flagged above this many recognised characters
+  ocr_text_length_threshold: 200 # flagged above this many recognized characters
   ocr_language: eng
   ocr_config: "--oem 1 --psm 11 -c tessedit_do_invert=0"
   ocr_timeout_seconds: 2.0
@@ -51,7 +51,7 @@ animal_filter:
   strict_non_human: false        # false: dog and cat case reports (see pmc_pair/animal_filter.py)
 
 citations:
-  title_fallback: true           # normalised title substring match after DOI, PMID and PMCID
+  title_fallback: true           # normalized title substring match after DOI, PMID and PMCID
 
 llm:
   sync_workers: 4                # parallel requests in --sync mode

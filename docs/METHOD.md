@@ -11,7 +11,7 @@ the checks made against the deposited files.
 
 The regenerated PMC-Patients collection is read from one table (`paths.pmc_patients`).
 Patient records are counted per article over the whole table, and only articles with
-exactly one patient record are kept. Patient identifiers are standardised to
+exactly one patient record are kept. Patient identifiers are standardized to
 `<pmcid>-<index>`. Links between two retained cases are kept without self links and
 counted once regardless of citation direction; cases without a remaining link are
 removed. PMC-Patients itself is regenerated outside this pipeline, with the PMC-Patients code
@@ -28,10 +28,10 @@ removed. PMC-Patients itself is regenerated outside this pipeline, with the PMC-
   index of the image identifier, so the identifiers of one article can have gaps where a
   figure is not kept. A figure needs a caption and a JPEG file (`.jpg`/`.jpeg`); a figure
   stored as several image files uses the first one.
-- **Screening:** grey level ≥ 250 on a 384-pixel thumbnail; an image is flagged if more
+- **Screening:** gray level ≥ 250 on a 384-pixel thumbnail; an image is flagged if more
   than half of its pixels are white. Otherwise Tesseract OCR (`--oem 1 --psm 11 -c
   tessedit_do_invert=0`, English, 2-second timeout) is applied, and an image is flagged
-  above 200 recognised characters. Images whose OCR times out are kept; images whose OCR
+  above 200 recognized characters. Images whose OCR times out are kept; images whose OCR
   fails with an error are excluded and screened again on the next run. The Tesseract
   version is recorded in `MANIFEST.json`.
 - **Animal cases:** keyword rules for dog and cat case reports on the title, abstract and
@@ -46,7 +46,7 @@ removed. PMC-Patients itself is regenerated outside this pipeline, with the PMC-
   "patient report", "patient description" or "patient summary", or is "patient".
   Captions and footnotes of figures and tables are left out, and a matching subsection is
   read once, as part of its matching parent.
-- **Citation verification:** DOI, PMID and PMCID in this order, then the normalised title
+- **Citation verification:** DOI, PMID and PMCID in this order, then the normalized title
   (lower case, punctuation removed) of the cited article as a substring of a reference
   title. The reference lists of both articles are searched, so either article can be the
   citing one. Identifiers are compared without case, URL prefix or "PMC" prefix. If both
@@ -121,7 +121,7 @@ proposals after the normal checks.
 ## 7. Image-level labels (`labels.py`, step `label-images`)
 
 Each free-text description is mapped to the controlled vocabulary of
-`label_taxonomy.json` (`LABEL_RULES.md`). After text normalisation, each rule (aliases
+`label_taxonomy.json` (`LABEL_RULES.md`). After text normalization, each rule (aliases
 and regular expressions) is matched as whole words; where matches overlap, the one of
 higher priority counts, then the longer one. In anatomy, vessel phrases are vasculature
 and are masked before the other rules are applied. A diagnosis description is split into
@@ -129,9 +129,12 @@ clauses. In each clause, specific rules count before organ-family fallback rules
 count before generic lesion terms. A counted term with a negation cue in its clause gives
 `normal_or_negative_report`, and a resolved term gives `postoperative_or_resolved_state`.
 A clause without a term can be an explicit postoperative or normal report. A description
-that no rule recognises receives `other`. An image receives the union of the categories
+that no rule recognizes receives `other`. An image receives the union of the categories
 of all pairs that contain it, deduplicated and sorted, with `other` kept only when no
-other category remains.
+other category remains. Because a pair description names only the modality both figures
+share, the rule of `nuclear_medicine` is also applied to the caption of every image: an
+image whose caption names nuclear-medicine imaging (the abbreviation PET only in
+capitals) receives `nuclear_medicine` as well.
 
 ## 8. Partitions (`article_disjoint_split.py`, `splits.py`, step `split`)
 

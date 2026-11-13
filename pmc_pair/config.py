@@ -54,7 +54,7 @@ DEFAULT_CONFIG = {
         "strict_non_human": False,  # dog and cat case reports (see animal_filter.py)
     },
     "citations": {
-        "title_fallback": True,  # normalised title substring match after DOI, PMID and PMCID
+        "title_fallback": True,  # normalized title substring match after DOI, PMID and PMCID
     },
     "llm": {
         "sync_workers": 4,

@@ -35,4 +35,4 @@ The images and captions of the PMC-PaIR dataset keep the terms recorded for each
 ## Python packages
 
 The packages in `requirements.txt` are not in this repository. They are installed separately, and
-each has its own licence.
+each has its own license.

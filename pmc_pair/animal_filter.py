@@ -1,6 +1,6 @@
 """Exclusion of animal case reports.
 
-Animal case reports are recognised with keyword rules on the title, abstract and journal
+Animal case reports are recognized with keyword rules on the title, abstract and journal
 title. With `strict_non_human: false` (default) the rules target dog and cat case
 reports. Exclusion phrases for human contexts ("dog bite", "CAT scan", "canine teeth")
 cancel only the signals listed in EXCLUSIONS_FOR; "dog bite" does not cancel the
