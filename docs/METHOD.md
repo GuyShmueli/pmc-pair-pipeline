@@ -3,10 +3,6 @@
 How each step of the pipeline is implemented, with its default parameters
 (`config.example.yaml`). All case pairs of a run are processed with one configuration.
 
-This document describes the current package. The deposited annotations came from earlier
-production workflows; [What can be reproduced](../README.md#what-can-be-reproduced) summarizes
-the checks made against the deposited files.
-
 ## 1. Data source and case selection (`cases.py`, step `select-cases`)
 
 The regenerated PMC-Patients collection is read from one table (`paths.pmc_patients`).

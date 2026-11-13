@@ -17,7 +17,3 @@ that stage (and of all later stages) stale: they are requested again, and `final
 | `question_generation` | annotation-ready | `{case_a}` (citing case), `{case_b}` (cited case), `{citation_reason}` (citation-analysis output) |
 | `answer_generation` | annotation-ready | `{case_a}`, `{case_b}`, `{citation_reason}`, `{questions}` |
 | `pair_selection` | annotation-ready | `{questions}`, `{answers}`, `{captions_a}`, `{captions_b}` (JSON objects `{image_id: caption}`) |
-
-These prompts are supplied for new pipeline runs and differ from those used to generate the
-deposited annotations. See [What can be reproduced](../README.md#what-can-be-reproduced) for
-the scope of the checks against the deposit.

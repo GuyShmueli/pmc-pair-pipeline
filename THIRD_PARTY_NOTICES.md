@@ -5,13 +5,12 @@ any file. [`LICENSING.md`](LICENSING.md) gives the terms for each path of this r
 
 ## PMC-Patients
 
-The pipeline reads a PMC-Patients table (`paths.pmc_patients`). This repository does not contain
-that table, the PMC-Patients code or the locally modified copy of that code.
+The pipeline reads a PMC-Patients table supplied through `paths.pmc_patients`.
+Obtain the table and its construction code separately from the sources below.
 
 Upstream sources:
 
-- Code: <https://github.com/zhao-zy15/PMC-Patients>. The upstream commit used for the
-  locally modified copy is not established by the available records.
+- Code: <https://github.com/zhao-zy15/PMC-Patients>.
 - Dataset: <https://huggingface.co/datasets/zhengyun21/PMC-Patients> and
   <https://doi.org/10.6084/m9.figshare.c.6723465>
 - Article: Zhao et al. A large-scale dataset of patient summaries for retrieval-based clinical

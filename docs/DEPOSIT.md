@@ -134,9 +134,8 @@ specified in [OUTPUTS.md](OUTPUTS.md). That format includes `MANIFEST.json`,
 
 `verify-deposit` and `package-deposit` operate on the Zenodo layout shown here.
 
-For retrieval, the public deposit contains 86,825 images and withholds 68 of the
-86,893 identifiers retained in the annotations. Checking or repackaging the public
-files does not restore those images. Follow the instructions of the `pmc-pair-retrieval`
-repository for `--allow-missing-images`; training and image evaluation on the public subset
-need not reproduce the numbers computed with all 86,893 images. Its saved-result reporting
-commands do not require the withheld image files.
+The Zenodo archives contain 86,825 images. The annotation files list 86,893 image
+identifiers, including 68 whose image files are withheld. For training and image
+evaluation on the available images, follow the `pmc-pair-retrieval` instructions for
+`--allow-missing-images`. Its saved-result reporting commands do not require the
+withheld image files.
