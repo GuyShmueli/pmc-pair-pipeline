@@ -1,0 +1,31 @@
+# Local configuration and credentials (never commit API keys)
+config.yaml
+.env
+*.key
+
+# Data, intermediate files and releases (large; kept out of the repository)
+data/
+examples/data/
+release/
+work/
+*.zip
+*.tar.gz
+
+# Logs of scripts/slurm_job.sh
+slurm-*.out
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+build/
+dist/
+
+# Notebooks and editors
+.ipynb_checkpoints/
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,5 @@
+Citing Title: {citing_title}
+Citing Abstract: {citing_abstract}
+Citation Paragraph: {citation_paragraph}
+Cited Title: {cited_title}
+Cited Abstract: {cited_abstract}

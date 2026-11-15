@@ -1,0 +1,4 @@
+# SHA256SUMS hashes every file of the repository byte for byte, so Git must never convert
+# line endings, including in Windows checkouts.
+* -text
+image_splits.json -diff
