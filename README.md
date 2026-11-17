@@ -276,7 +276,7 @@ examples/        synthetic example (generator, config, runner)
 tests/           tests for consequential errors
 scripts/         split regeneration (generate_splits.py); SLURM template for CPU-bound steps
 docs/            method, outputs, label taxonomy, Zenodo validation and repackaging
-LICENSE          MIT license; LICENSING.md lists the paths it covers
+LICENSE          MIT license (LICENSING.md lists the paths it covers)
 LICENSING.md     the terms for each path of the repository
 THIRD_PARTY_NOTICES.md   pointers to the sources of the articles and of PMC-Patients
 ```
@@ -289,12 +289,12 @@ image pairs from PubMed Central case reports*, DOI 10.5281/zenodo.23439169, see
 PMC-Patients (Zhao et al., *Scientific Data* 10, 909, 2023). Citation metadata:
 [`CITATION.cff`](CITATION.cff).
 
-The files that [`LICENSING.md`](LICENSING.md) lists as code, documentation and configuration are
-released under the MIT license ([`LICENSE`](LICENSE)). `LICENSING.md` also gives the terms for the
-other paths. The license does not cover data: images and captions keep the terms
-recorded for each image in the deposit's `licenses.csv`, and
-[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) points to the sources of the articles and of
-PMC-Patients, which state their own terms.
+The code, documentation, configuration, prompts, examples and tests are released under the MIT
+license ([`LICENSE`](LICENSE)). The data files `image_splits.json` and `label_taxonomy.json` are
+released under CC BY 4.0. [`LICENSING.md`](LICENSING.md) lists the paths of each class. Neither
+license covers the images and captions, which keep the terms recorded for each image in the
+deposit's `licenses.csv`. [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) points to the sources
+of the articles and of PMC-Patients, which state their own terms.
 
 The articles this pipeline downloads are part of the PMC Article Datasets of the U.S. National
 Library of Medicine (NLM): NIH NLM NCBI PubMed Central (PMC) Article Datasets - Full-Text Biomedical
