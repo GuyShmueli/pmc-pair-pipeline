@@ -6,10 +6,8 @@ message: >-
   and the data files under CC BY 4.0. LICENSING.md lists the paths of each class.
 title: "PMC-PaIR dataset construction pipeline"
 type: software
-version: "1.0.1"
-license:
-  - MIT
-  - CC-BY-4.0
+version: "1.0.2"
+license: MIT
 authors:
   - family-names: Shmueli
     given-names: Guy

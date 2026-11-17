@@ -3,4 +3,4 @@
 Run `python -m pmc_pair --help` for the list of pipeline steps.
 """
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
