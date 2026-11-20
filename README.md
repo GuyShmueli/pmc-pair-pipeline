@@ -19,10 +19,6 @@ select-cases → download → extract-figures → filter-images → prepare-pair
 [`docs/METHOD.md`](docs/METHOD.md) describes how each step is implemented and lists its
 default parameters.
 
-The annotations were generated through earlier production workflows executed in separate
-steps. The released package is a later implementation designed to automate the workflow
-and support reproducible execution.
-
 <!-- BEGIN release-status -->
 ## Data and weights
 
