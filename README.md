@@ -26,7 +26,7 @@ The dataset is not yet available for download. Its reserved Zenodo DOI is
 `10.5281/zenodo.23439169`.
 
 For model training and retrieval evaluation, see the companion `pmc-pair-retrieval`
-repository. Its fine-tuned weights are not yet available for download.
+repository.
 <!-- END release-status -->
 
 ## Installation
