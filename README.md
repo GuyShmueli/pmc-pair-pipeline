@@ -22,8 +22,7 @@ default parameters.
 <!-- BEGIN release-status -->
 ## Data and weights
 
-The dataset is not yet available for download. Its reserved Zenodo DOI is
-`10.5281/zenodo.23439169`.
+The dataset is available from Zenodo: https://doi.org/10.5281/zenodo.23439169
 
 For model training and retrieval evaluation, see the companion `pmc-pair-retrieval`
 repository.
